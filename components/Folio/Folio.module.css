@@ -1,0 +1,29 @@
+._ {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  margin: 0 -1rem;
+  flex-wrap: wrap;
+}
+
+._ .project {
+  display: flex;
+  width: 33.33%;
+  align-items: stretch;
+  justify-content: stretch;
+  height: 30vh;
+  min-height: 200px;
+}
+
+/* Mobile */
+@media screen and (max-width: 700px) {
+  ._ {
+    margin: 0 -0.5rem;
+  }
+
+  ._ .project {
+    width: 50%;
+    height: 18vh;
+    min-height: 100px;
+  }
+}
