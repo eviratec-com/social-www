@@ -255,7 +255,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>5 User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.cta}>
+                  <Button href="/join" className={styles.ctaBtn}>
                     Create An Account
                   </Button>
                 </div>
@@ -274,7 +274,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>25 User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.ctaBtn} className={styles.cta}>
+                  <Button href="/join" className={styles.ctaBtn} >
                     Create An Account
                   </Button>
                 </div>
@@ -293,7 +293,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>125 User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.ctaBtn} className={styles.cta}>
+                  <Button href="/join" className={styles.ctaBtn} >
                     Create An Account
                   </Button>
                 </div>
@@ -313,7 +313,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>Unlimited User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.ctaBtn} className={styles.cta}>
+                  <Button href="/join" className={styles.ctaBtn} >
                     Create An Account
                   </Button>
                 </div>
