@@ -26,7 +26,7 @@ interface Props {
 }
 
 const META_TITLE = "\
-Launch Your Own Social Network | Eviratec Social Platform"
+Plans and Pricing | Your Own Social Network | Eviratec Social Platform"
 
 const META_DESCRIPTION = "\
 Launch your own public or private Social Network. Complete with photo uploads, \
@@ -67,144 +67,14 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
 
       <main className={styles.main}>
         <h1>
-          Eviratec Social Platform
+          Plans &amp; Pricing
         </h1>
-
-        <div className={styles.dblSection}>
-          <section className={`${styles.section} ${styles.imgSection}`}>
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-com-au-signup.jpg`}
-                  alt={`A screenshot of the signup form, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile signup form, in light mode.
-              </figcaption>
-            </figure>
-
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-com-au-feed.jpg`}
-                  alt={`A screenshot of a Feed, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                    objectPosition: 'top',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile feed/topic page, in light mode.
-              </figcaption>
-            </figure>
-
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-com-au-mobile-profile.jpg`}
-                  alt={`A screenshot of a User Profile, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile user profile page, in light mode.
-              </figcaption>
-            </figure>
-          </section>
-
-          <section className={styles.section}>
-            <TextBlock>
-              <p>
-                Launch your own public or private Social Network. Complete with
-                photo uploads, user registration, private messaging, public feeds
-                (aka boards, or forums), custom profile fields, reserved
-                usernames, custom domains, and BYO branding.
-              </p>
-
-              <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
-              </p>
-            </TextBlock>
-          </section>
-        </div>
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Share &amp; Connect
-            </h2>
-          </TextBlock>
-        </section>
-
-        <div className={`${styles.dblSection} ${styles.reverse}`}>
-          <section className={`${styles.section} ${styles.desktopImgSection}`}>
-            <figure className={styles.desktopScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-net-desktop-hero.png`}
-                  alt={`A screenshot of the homepage from Eviratec Social Platform (www.eviratecsocial.com). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
-              </figcaption>
-            </figure>
-          </section>
-
-          <section className={styles.section}>
-            <TextBlock>
-              <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
-              </p>
-
-              <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
-
-              <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
-              </p>
-            </TextBlock>
-          </section>
-        </div>
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Features
-            </h2>
-          </TextBlock>
-        </section>
 
         <section className={`${styles.section} ${styles.featuresSection}`}>
           <TextBlock>
             <div className={styles.twoCol}>
               <div className={styles.col}>
-                <h3>Platform Features</h3>
+                <h2>Platform Features</h2>
 
                 <ul>
                   <li>BYO/Custom domain name</li>
@@ -219,7 +89,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <li>Signup Age Limit</li>
                 </ul>
 
-                <h3>All Plans Include</h3>
+                <h2>All Plans Include</h2>
 
                 <ul>
                   <li>100GB Storage</li>
@@ -231,7 +101,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <li>Free Technical Support</li>
                 </ul>
 
-                <h3>Technical Support</h3>
+                <h2>Technical Support</h2>
 
                 <ul>
                   <li>Phone: <span>(+61482465983)</span><br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
@@ -255,7 +125,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>5 User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.cta}>
+                  <Button href="/join" className={styles.ctaBtn} className={styles.cta}>
                     Create An Account
                   </Button>
                 </div>
@@ -342,72 +212,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
             </p>
           </TextBlock>
         </section>
-
-        <section className={styles.section} id="signup">
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Want to know more?
-            </h2>
-          </TextBlock>
-        </section>
-
-        <section className={styles.section}>
-          <TextBlock>
-            <p style={{textAlign: 'center'}}>
-              Contact us to sign-up...
-            </p>
-          </TextBlock>
-        </section>
-
-        <section className={`${styles.section} ${styles.featuresSection}`}>
-          <TextBlock>
-            <p style={{display: 'none'}}>
-              Get in touch with our sales team, using the following form.
-            </p>
-
-            <div className={styles.twoCol}>
-              <div className={styles.col}>
-                <p>
-                  Call us: <br />
-                  <Link href="tel:+61482465983">+61 482 465 983</Link>
-                </p>
-              </div>
-              <div className={styles.col}>
-                <p>
-                  Email us: <br />
-                  <Link href="mailto:sales@eviratec.com">sales@eviratec.com</Link>
-                </p>
-              </div>
-            </div>
-          </TextBlock>
-        </section>
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Social Profiles
-            </h2>
-          </TextBlock>
-        </section>
-
-        <div className={styles.section} id="profiles">
-          <SocialProfiles />
-        </div>
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Legal
-            </h2>
-          </TextBlock>
-        </section>
-
-        <div className={`${styles.section} ${styles.contact}`} id="legal">
-          <ul>
-            <li><Link href={`/terms`}>Terms of Use</Link></li>
-            <li><Link href={`/privacy`}>Privacy Policy</Link></li>
-          </ul>
-        </div>
       </main>
 
       <Footer />

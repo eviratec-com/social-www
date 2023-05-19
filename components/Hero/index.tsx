@@ -42,7 +42,7 @@ const USER_MENU_ITEMS: MenuItem[] = [{
 
 const MENU_ITEMS: MenuItem[] = [{
   label: 'Plans & Pricing',
-  link: '/links',
+  link: '/plans-and-pricing',
 }]
 
 interface Props {
