@@ -185,6 +185,7 @@
   color: #fff;
   text-decoration: none;
   font-weight: 200;
+  font-size: 1.2rem;
 }
 
 .section p {
@@ -303,6 +304,10 @@
     padding: 2rem 1rem 2rem;
   }
 
+  .main section:first-of-type h2 {
+    margin-top: 2rem;
+  }
+
   .main div.dblSection {
     margin-top: 4rem;
     margin-bottom: 0;
@@ -327,6 +332,8 @@
   .main div.dblSection section.section,
   .main div.dblSection.reverse section.section {
     text-align: center;
+    width: 100%;
+    margin-right: 0;
   }
 
   .section h2 {
@@ -371,7 +378,7 @@
   }
 
   .main .section h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
   }
 
   .main .section .twoCol .col .plan {
