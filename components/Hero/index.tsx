@@ -21,6 +21,15 @@ type MenuItem = {
 const ANON_MENU_ITEMS: MenuItem[] = [{
   label: 'Sign-up',
   link: '/join',
+},{
+  label: 'Features',
+  link: '/features',
+},{
+  label: 'Contact Us',
+  link: '/contact-us',
+},{
+  label: 'Plans & Pricing',
+  link: '/plans-and-pricing',
 }, {
   label: 'Customer Login',
   link: '/login',
@@ -40,10 +49,7 @@ const USER_MENU_ITEMS: MenuItem[] = [{
   link: '/forum',
 }]
 
-const MENU_ITEMS: MenuItem[] = [{
-  label: 'Plans & Pricing',
-  link: '/plans-and-pricing',
-}]
+const MENU_ITEMS: MenuItem[] = []
 
 interface Props {
   feeds?: Feed[]
