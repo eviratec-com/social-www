@@ -95,7 +95,6 @@
 }
 
 .feeds {
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
@@ -105,7 +104,7 @@
   left: 5vw;
   right: 5vw;
   overflow: hidden;
-  display: flex;
+  display: none;
   z-index: 10;
   margin-top: 4rem;
 }

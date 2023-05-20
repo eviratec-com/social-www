@@ -89,7 +89,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <div className={styles.spacer}></div>
 
                   <Button href="/join" className={styles.ctaBtn}>
-                    Create An Account
+                    Create your site now
                   </Button>
                 </div>
               </div>
@@ -112,7 +112,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <div className={styles.spacer}></div>
 
                   <Button href="/join" className={styles.ctaBtn}>
-                    Create An Account
+                    Create your site now
                   </Button>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <div className={styles.spacer}></div>
 
                   <Button href="/join" className={styles.ctaBtn}>
-                    Create An Account
+                    Create your site now
                   </Button>
                 </div>
               </div>
@@ -157,7 +157,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </ul>
 
                   <Button href="/contact-us" className={styles.ctaBtn}>
-                    Contact Us For A Quote
+                    Contact us for a quote
                   </Button>
                 </div>
               </div>

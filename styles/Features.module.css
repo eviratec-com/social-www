@@ -22,13 +22,14 @@
 }
 
 .main div.dblSection.reverse section.section {
-  text-align: right;
-  justify-content: flex-end;
+  text-align: left;
+  justify-content: flex-start;
 }
 
 .main div.dblSection > section {
   display: flex;
   flex: 1;
+  width: 50%;
 }
 
 .main div.dblSection > section:last-of-type {
@@ -213,13 +214,10 @@
 
 .section.contact p {
   margin-bottom: 2rem;
-  text-align: center;
 }
 
 .section.contact ul {
-  padding-left: 0;
-  text-align: center;
-  list-style-type: none;
+  padding-left: 2rem;
 }
 
 .section.contact a {

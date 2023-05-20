@@ -132,13 +132,13 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
             <TextBlock>
               <p>
                 Launch your own public or private Social Network. Complete with
-                photo uploads, user registration, private messaging, public feeds
-                (aka boards, or forums), custom profile fields, reserved
-                usernames, custom domains, and BYO branding.
+                photo uploads, user registration, private messaging, public
+                forums, custom profile fields, reserved usernames, custom
+                domain, and BYO branding.
               </p>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -186,7 +186,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </p>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -256,7 +256,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </ul>
 
                   <Button href="/join" className={styles.ctaBtn}>
-                    Create An Account
+                    Create a new site
                   </Button>
                 </div>
 
@@ -275,7 +275,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </ul>
 
                   <Button href="/join" className={styles.ctaBtn} >
-                    Create An Account
+                    Create a new site
                   </Button>
                 </div>
 
@@ -294,7 +294,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </ul>
 
                   <Button href="/join" className={styles.ctaBtn} >
-                    Create An Account
+                    Create a new site
                   </Button>
                 </div>
 
@@ -314,7 +314,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </ul>
 
                   <Button href="/join" className={styles.ctaBtn} >
-                    Create An Account
+                    Create a new site
                   </Button>
                 </div>
 
@@ -354,31 +354,26 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
         <section className={styles.section}>
           <TextBlock>
             <p style={{textAlign: 'center'}}>
-              Contact us to sign-up...
+              Contact us for more information.
             </p>
           </TextBlock>
         </section>
 
-        <section className={`${styles.section} ${styles.featuresSection}`}>
+        <section className={`${styles.section} ${styles.contact}`}>
           <TextBlock>
             <p style={{display: 'none'}}>
               Get in touch with our sales team, using the following form.
             </p>
 
-            <div className={styles.twoCol}>
-              <div className={styles.col}>
-                <p>
-                  Call us: <br />
-                  <Link href="tel:+61482465983">+61 482 465 983</Link>
-                </p>
-              </div>
-              <div className={styles.col}>
-                <p>
-                  Email us: <br />
-                  <Link href="mailto:sales@eviratec.com">sales@eviratec.com</Link>
-                </p>
-              </div>
-            </div>
+            <p>
+              Call us: <br />
+              <Link href="tel:+61482465983">+61 482 465 983</Link>
+            </p>
+
+            <p>
+              Email us: <br />
+              <Link href="mailto:sales@eviratec.com">sales@eviratec.com</Link>
+            </p>
           </TextBlock>
         </section>
 

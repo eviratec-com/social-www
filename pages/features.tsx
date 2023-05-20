@@ -5,7 +5,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/Features.module.css'
 
 import fetchFeeds from '@/functions/fetchFeeds'
 
@@ -72,6 +72,59 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
 
 
 
+        <section className={styles.section}>
+          <TextBlock>
+            <h2 style={{textAlign: 'center'}}>
+              Photo Uploading
+            </h2>
+          </TextBlock>
+        </section>
+
+        <div className={`${styles.dblSection} ${styles.reverse}`}>
+          <section className={`${styles.section} ${styles.desktopImgSection}`}>
+            <figure className={styles.desktopScreenshot}>
+              <div className={styles.imgWrapper}>
+                <Image
+                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-upload-desktop-light.png`}
+                  alt={`Photo upload input on Eviratec.com.au (desktop)`}
+                  style={{
+                    objectFit: 'contain',
+                  }}
+                  unoptimized
+                  fill
+                />
+              </div>
+
+              <figcaption>
+                Photo upload input on Eviratec.com.au (desktop)
+              </figcaption>
+            </figure>
+          </section>
+
+          <section className={styles.section}>
+            <TextBlock>
+              <p>
+                Upload and attach multiple photos, up to 50MB per image, to posts and
+                private messages.
+              </p>
+
+              <ul>
+                <li>Up to 50MB per image</li>
+                <li>Resized on upload (jpgs only)</li>
+                <li>Supports gif, png, and jpg/jpeg</li>
+                <li>Multiple images per post/message</li>
+              </ul>
+
+              <p>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
+              </p>
+            </TextBlock>
+          </section>
+        </div>
+
+
+
+
 
 
         <section className={styles.section}>
@@ -88,7 +141,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-start.jpg`}
-                  alt={`A screenshot of the signup form, on a mobile device, in light mode`}
+                  alt={`Mobile signup form, in light mode.`}
                   style={{
                     objectFit: 'cover',
                   }}
@@ -106,7 +159,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-error.jpg`}
-                  alt={`A screenshot of a Feed, on a mobile device, in light mode`}
+                  alt={`Mobile signup form, input validation, in dark mode.`}
                   style={{
                     objectFit: 'cover',
                     objectPosition: 'top',
@@ -117,7 +170,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Mobile feed/topic page, in light mode.
+                Mobile signup form, input validation, in dark mode.
               </figcaption>
             </figure>
 
@@ -125,7 +178,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-done.jpg`}
-                  alt={`A screenshot of a User Profile, on a mobile device, in light mode`}
+                  alt={`Mobile signup form, completed, in light mode.`}
                   style={{
                     objectFit: 'cover',
                   }}
@@ -135,7 +188,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Mobile user profile page, in light mode.
+                Mobile signup form, completed, in light mode.
               </figcaption>
             </figure>
           </section>
@@ -143,68 +196,18 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
+                Let your visitors create an account.
               </p>
 
-              <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
+              <ul>
+                <li>Signup Age Limit</li>
+                <li>Reserved Usernames</li>
+                <li>Bcrypt Password Security</li>
+                <li>Custom Account Statuses</li>
+              </ul>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
-              </p>
-            </TextBlock>
-          </section>
-        </div>
-
-
-
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              Photo Uploading
-            </h2>
-          </TextBlock>
-        </section>
-
-        <div className={`${styles.dblSection} ${styles.reverse}`}>
-          <section className={`${styles.section} ${styles.desktopImgSection}`}>
-            <figure className={styles.desktopScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-upload-desktop-light.png`}
-                  alt={`A screenshot of the homepage from Eviratec Social Platform (www.eviratecsocial.com). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
-              </figcaption>
-            </figure>
-          </section>
-
-          <section className={styles.section}>
-            <TextBlock>
-              <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
-              </p>
-
-              <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
-
-              <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -229,7 +232,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-net-desktop-hero.png`}
-                  alt={`A screenshot of the homepage from Eviratec Social Platform (www.eviratecsocial.com). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
+                  alt={`Eviratec Network Web Link Directory homepage (www.eviratec.net). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
                   style={{
                     objectFit: 'contain',
                   }}
@@ -239,7 +242,8 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
+                Eviratec Network Web Link Directory homepage
+                (<Link href={`https://www.eviratec.net`}>www.eviratec.net</Link>)
               </figcaption>
             </figure>
           </section>
@@ -247,17 +251,18 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
+                Choose topics for your social network.
               </p>
 
-              <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
+              <ul>
+                <li>Custom Links</li>
+                <li>Custom URL structure<br /><span>(e.g. /forums, or /topics)</span></li>
+                <li>Post photos, links, and text</li>
+                <li>Comments and permalinks</li>
+              </ul>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -293,7 +298,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
+                Desktop user profile page, in dark mode
               </figcaption>
             </figure>
           </section>
@@ -301,17 +306,17 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
+                Let your users select profile fields to enhance their public
+                profile.
               </p>
 
               <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
+                Add, update, and remove custom profile field types for your
+                member base.
               </p>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -336,7 +341,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-profile-pm-mobile.jpg`}
-                  alt={`A screenshot of the signup form, on a mobile device, in light mode`}
+                  alt={`Mobile Start Conversation button, in dark mode.`}
                   style={{
                     objectFit: 'cover',
                   }}
@@ -346,7 +351,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Mobile signup form, in light mode.
+                Mobile Start Conversation button, in dark mode.
               </figcaption>
             </figure>
 
@@ -354,7 +359,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-pms-mobile.jpg`}
-                  alt={`A screenshot of a Feed, on a mobile device, in light mode`}
+                  alt={`Mobile conversation list, in light mode.`}
                   style={{
                     objectFit: 'cover',
                     objectPosition: 'top',
@@ -365,7 +370,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Mobile feed/topic page, in light mode.
+                Mobile conversation list, in light mode.
               </figcaption>
             </figure>
 
@@ -373,7 +378,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-pm-mobile.jpg`}
-                  alt={`A screenshot of a User Profile, on a mobile device, in light mode`}
+                  alt={`Mobile conversation page, in dark mode`}
                   style={{
                     objectFit: 'cover',
                   }}
@@ -383,7 +388,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Mobile user profile page, in light mode.
+                Mobile conversation page, in dark mode.
               </figcaption>
             </figure>
           </section>
@@ -391,17 +396,17 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
+                Members can send messages to each-other using the conversations
+                functionality.
               </p>
 
               <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
+                Let your users interact safely, and privately without ever
+                leaving your website.
               </p>
 
               <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
@@ -423,7 +428,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-homepage-desktop.png`}
-                  alt={`A screenshot of the homepage from Eviratec Social Platform (www.eviratecsocial.com). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
+                  alt={`Eviratec homepage (www.eviratec.com.au)`}
                   style={{
                     objectFit: 'contain',
                   }}
@@ -433,7 +438,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
+                Eviratec homepage (www.eviratec.com.au)
               </figcaption>
             </figure>
           </section>
@@ -441,17 +446,12 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
+                Show your customers it's really you, by adding your own logo
+                and brand colours to your site.
               </p>
 
               <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
-
-              <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
+                <Button href="/join" className={styles.ctaBtn}>Create a new site</Button>
               </p>
             </TextBlock>
           </section>
