@@ -23,7 +23,7 @@ export default function Footer() {
         <div className={styles.links}>
           <Link prefetch={false} href={`/recent`}>Recent Posts</Link>
           <span className={styles.linkSeparator}> | </span>
-          <Link prefetch={false} href={`/links`}>Browse Topics</Link>
+          <Link prefetch={false} href={`/forum`}>Support Forum</Link>
         </div>
       </div>
 
