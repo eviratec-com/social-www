@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from '@/styles/Feed.module.css'
+import styles from '@/styles/FormPage.module.css'
 
 import fetchPosts from '@/functions/fetchPosts'
 
@@ -20,7 +20,7 @@ const JoinPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create Account - Eviratec Social Platform</title>
+        <title>Create Yours - Eviratec Social Platform</title>
         <meta name="description" content="Create an account on Eviratec Social Platform" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -34,7 +34,7 @@ const JoinPage: NextPage = () => {
 
       <main className={styles.main}>
         <FeedPageHeading>
-          Join
+          Create Yours
         </FeedPageHeading>
 
         <SignupForm />
