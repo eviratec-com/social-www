@@ -68,12 +68,26 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           ESP Features
         </h1>
 
-        <div className={styles.dblSection}>
+
+
+
+
+
+
+        <section className={styles.section}>
+          <TextBlock>
+            <h2 style={{textAlign: 'center'}}>
+              User Registration
+            </h2>
+          </TextBlock>
+        </section>
+
+        <div className={`${styles.dblSection}`}>
           <section className={`${styles.section} ${styles.imgSection}`}>
             <figure className={styles.mobileScreenshot}>
               <div className={styles.imgWrapper}>
                 <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-signup.jpg`}
+                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-start.jpg`}
                   alt={`A screenshot of the signup form, on a mobile device, in light mode`}
                   style={{
                     objectFit: 'cover',
@@ -91,7 +105,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
             <figure className={styles.mobileScreenshot}>
               <div className={styles.imgWrapper}>
                 <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-feed.jpg`}
+                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-error.jpg`}
                   alt={`A screenshot of a Feed, on a mobile device, in light mode`}
                   style={{
                     objectFit: 'cover',
@@ -110,7 +124,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
             <figure className={styles.mobileScreenshot}>
               <div className={styles.imgWrapper}>
                 <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-mobile-profile.jpg`}
+                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/net-signup-mobile-done.jpg`}
                   alt={`A screenshot of a User Profile, on a mobile device, in light mode`}
                   style={{
                     objectFit: 'cover',
@@ -129,10 +143,13 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Launch your own public or private Social Network. Complete with
-                photo uploads, user registration, private messaging, public feeds
-                (aka boards, or forums), custom profile fields, reserved
-                usernames, custom domains, and BYO branding.
+                Create your own place online to share memories, make plans,
+                and connect with your friends, family, staff, or team members.
+              </p>
+
+              <p>
+                Near, or far: Make your own place to connect, with the people
+                you care about.
               </p>
 
               <p>
@@ -170,97 +187,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
 
               <figcaption>
                 Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
-              </figcaption>
-            </figure>
-          </section>
-
-          <section className={styles.section}>
-            <TextBlock>
-              <p>
-                Create your own place online to share memories, make plans,
-                and connect with your friends, family, staff, or team members.
-              </p>
-
-              <p>
-                Near, or far: Make your own place to connect, with the people
-                you care about.
-              </p>
-
-              <p>
-                <Button href="/join" className={styles.ctaBtn}>Create An Account</Button>
-              </p>
-            </TextBlock>
-          </section>
-        </div>
-
-
-
-
-
-
-
-        <section className={styles.section}>
-          <TextBlock>
-            <h2 style={{textAlign: 'center'}}>
-              User Registration
-            </h2>
-          </TextBlock>
-        </section>
-
-        <div className={`${styles.dblSection}`}>
-          <section className={`${styles.section} ${styles.imgSection}`}>
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-signup.jpg`}
-                  alt={`A screenshot of the signup form, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile signup form, in light mode.
-              </figcaption>
-            </figure>
-
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-feed.jpg`}
-                  alt={`A screenshot of a Feed, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                    objectPosition: 'top',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile feed/topic page, in light mode.
-              </figcaption>
-            </figure>
-
-            <figure className={styles.mobileScreenshot}>
-              <div className={styles.imgWrapper}>
-                <Image
-                  src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230520/eviratec-com-au-mobile-profile.jpg`}
-                  alt={`A screenshot of a User Profile, on a mobile device, in light mode`}
-                  style={{
-                    objectFit: 'cover',
-                  }}
-                  unoptimized
-                  fill
-                />
-              </div>
-
-              <figcaption>
-                Mobile user profile page, in light mode.
               </figcaption>
             </figure>
           </section>
