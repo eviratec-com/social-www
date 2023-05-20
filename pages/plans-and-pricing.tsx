@@ -63,8 +63,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
         <meta name="twitter:image" content={`${META_OG_IMAGE}`} />
       </Head>
 
-      <Hero homepage={true} feeds={feeds} />
-
       <main className={styles.main}>
         <h1>
           Plans &amp; Pricing
