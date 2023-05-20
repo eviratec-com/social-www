@@ -13,6 +13,11 @@ export default async function checkUsername (username: string): Promise<boolean>
     return false // Username is not available
   }
 
+  // Ensure username matches the required pattern
+  if (!username.match(/^([A-Z]{1}[A-Z0-9-]{1,}[A-Z0-9]{1}|[A-Z0-9]{1})$/i)) {
+    return false // Username is not (a-z,A-Z,0-9,-)
+  }
+
   // If the username is in the list of reserved usernames
   if (reservedUsernames.indexOf(username.toLowerCase()) > -1) {
     return false // Username is not available

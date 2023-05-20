@@ -41,15 +41,34 @@ export default function SignupForm() {
 
   const [usernameAvailable, setUsernameAvailable] = useState<boolean>(false)
   const [usernameChecked, setUsernameChecked] = useState<boolean>(false)
+  const [loadingUsername, setLoadingUsername] = useState<boolean>(false)
   const [usernameError, setUsernameError] = useState<string>('')
   const [acceptLegal, setAcceptLegal] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
 
+  // validInputChar(input: string)
+  // prevents input of invalid chars in username(domain) field
+  const validInputChar = useCallback((input: string): boolean => {
+    return !!input.match(/^([A-Z]{1}[A-Z0-9-]{1,}|[A-Z]{1}|)$/i)
+  }, [])
+
+  const validUsername = useCallback((input: string): boolean => {
+    const isMatch: boolean = !!input.match(/^[A-Z]{1}[A-Z0-9-]{1,}[A-Z0-9]{1}$/i)
+    const isGtMinLength: boolean = input.length >= 3
+
+    return isMatch && isGtMinLength
+  }, [])
+
   const checkUsername = useCallback((event): void => {
+    if (!validUsername(username)) {
+      return
+    }
+
     setUsernameError('')
     setLoading(true)
+    setLoadingUsername(true)
 
     const req = {
       method: 'POST',
@@ -61,20 +80,27 @@ export default function SignupForm() {
       .then((result) => {
         if (400 === result.status) {
           return result.json().then(json => {
+            setLoadingUsername(false)
             setLoading(false)
-            setUsernameError(`Unable to check username availability: ${username}`)
+            setUsernameError(
+              `Unable to check subdomain availability: ${username}.eviratecsocial.online`
+            )
           })
         }
 
         result.json().then(json => {
+          setLoadingUsername(false)
           setLoading(false)
           setUsernameChecked(true)
           setUsernameAvailable(json.available)
         })
       })
       .catch((err) => {
+        setLoadingUsername(false)
         setLoading(false)
-        setUsernameError(`Unable to check username availability: ${username}`)
+        setUsernameError(
+          `Unable to check subdomain availability: ${username}.eviratecsocial.online`
+        )
       })
 
   }, [username])
@@ -156,13 +182,6 @@ export default function SignupForm() {
 
   const validEmail = useCallback((input: string): boolean => {
     return !!input.match(/^.+\@.+\..+$/i)
-  }, [])
-
-  const validUsername = useCallback((input: string): boolean => {
-    const isMatch: boolean = !!input.match(/^[A-Z0-9]{1}[A-Z0-9-._]*[A-Z0-9]{1}$/i)
-    const isGtMinLength: boolean = input.length >= 2
-
-    return isMatch && isGtMinLength
   }, [])
 
   const validPassword = useCallback((input: string): boolean => {
@@ -262,7 +281,7 @@ export default function SignupForm() {
       <div className={styles.formWrapper}>
         <form name="login" onSubmit={handleSubmit}>
           <div className={styles.inputField}>
-            <label htmlFor={displayNameInputId}>Display Name</label>
+            <label htmlFor={displayNameInputId}>Your Full Name</label>
             <input
               id={displayNameInputId}
               value={displayName}
@@ -294,43 +313,6 @@ export default function SignupForm() {
               <p className={styles.fieldError}>
                 Please enter a valid email address.
               </p>
-            }
-          </div>
-
-          <div className={styles.inputField}>
-            <label htmlFor={usernameInputId}>Username</label>
-            <input
-              id={usernameInputId}
-              value={username}
-              name="username"
-              onChange={e => setUsername(e.target.value)}
-              onFocus={e => setUsernameChecked(false)}
-              onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
-            />
-
-            {touched(usernameInputId) && !validUsername(username) &&
-              <p className={styles.fieldError}>
-                Please enter a valid username. Usernames may only contain:
-                <ul>
-                  <li>English alphabet (A-Z)</li>
-                  <li>Numbers (0-9)</li>
-                  <li>Hyphens (-), Underscores (_), and Periods (.)</li>
-                </ul>
-              </p>
-            }
-
-            {usernameChecked && usernameAvailable &&
-              <p className={styles.fieldSuccess}>Username available!</p>
-            }
-
-            {usernameChecked && !usernameAvailable &&
-              <p className={styles.fieldError}>
-                Username {username} is not available.
-              </p>
-            }
-
-            {usernameError &&
-              <p className={styles.fieldError}>{usernameError}</p>
             }
           </div>
 
@@ -376,6 +358,69 @@ export default function SignupForm() {
             }
           </div>
 
+          <div className={styles.inputField}>
+            <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
+            <div className={styles.urlPicker}>
+              <span className={styles.urlPickerProtocol}>https://</span>
+              <div className={styles.urlPickerInput}>
+                <input
+                  id={usernameInputId}
+                  value={username}
+                  name="username"
+                  placeholder="yourname"
+                  className={styles.usernameInput}
+                  onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
+                  onFocus={e => setUsernameChecked(false)}
+                  onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
+                />
+              </div>
+
+              <div className={styles.urlPickerDomain}>
+                <select>
+                  <option selected>.eviratecsocial.online</option>
+                </select>
+              </div>
+            </div>
+
+            {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
+              <p className={styles.fieldError}>
+                Please enter a valid sub-domain.
+                <br />Sub-domain names must be at least 3 characters.
+              </p>
+            }
+
+            {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
+              <p className={styles.fieldError}>
+                Please enter a valid sub-domain. Sub-domain names may only contain:
+                <ul>
+                  <li>English alphabet (A-Z)</li>
+                  <li>Numbers (0-9)</li>
+                  <li>Hyphens (-)</li>
+                </ul>
+              </p>
+            }
+
+            {loadingUsername &&
+              <p className={styles.fieldSuccess}>Checking availability...</p>
+            }
+
+            {usernameChecked && usernameAvailable &&
+              <p className={styles.fieldSuccess}>
+                {username}.eviratecsocial.online is available!
+              </p>
+            }
+
+            {usernameChecked && !usernameAvailable &&
+              <p className={styles.fieldError}>
+                Domain {username}.eviratecsocial.online is not available.
+              </p>
+            }
+
+            {usernameError &&
+              <p className={styles.fieldError}>{usernameError}</p>
+            }
+          </div>
+
           <div className={styles.tosAcceptWrapper}>
             <label>
               <input
@@ -403,7 +448,7 @@ export default function SignupForm() {
           </div>
 
           <div className={styles.submitButtonWrapper}>
-            <button type="submit" disabled={loading}>Create Account</button>
+            <button type="submit" disabled={loading}>Save &amp; Continue</button>
           </div>
         </form>
       </div>

@@ -2,7 +2,7 @@
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  width: 285px;
+  width: 385px;
   background-color: transparent;
 }
 
@@ -25,11 +25,64 @@
   justify-content: stretch;
 }
 
+._ .formWrapper form .inputField div.urlPicker {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+._ .formWrapper form .inputField div.urlPicker div.urlPickerInput,
+._ .formWrapper form .inputField div.urlPicker span.urlPickerProtocol {
+  margin-right: 0.5rem;
+}
+
+._ .formWrapper form .inputField div.urlPicker span.urlPickerProtocol {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: 200;
+}
+
+._ .formWrapper form .inputField div.urlPicker div.urlPickerInput {
+  display: flex;
+  flex: 5;
+}
+
+._ .formWrapper form .inputField div.urlPicker div.urlPickerInput input {
+  width: 100%;
+}
+
+._ .formWrapper form .inputField div.urlPicker div.urlPickerDomain {
+  display: flex;
+}
+
+._ .formWrapper form .inputField div.urlPicker {
+
+}
+
+._ .formWrapper form .inputField div.urlPicker select {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 200;
+}
+
 ._ .formWrapper form .inputField input,
 ._ .formWrapper form .inputField input:focus,
 ._ .formWrapper form .inputField input:active {
   outline: none;
   font-size: 1rem;
+  position: relative;
+}
+
+._ .formWrapper form .inputField input:hover,
+._ .formWrapper form .inputField input:focus,
+._ .formWrapper form .inputField input:active,
+._ .formWrapper form .inputField select:hover,
+._ .formWrapper form .inputField select:focus,
+._ .formWrapper form .inputField select:active {
+  outline: none;
+  border-color: orangered;
 }
 
 ._ .formWrapper form .inputField label {
@@ -37,7 +90,8 @@
   color: deepskyblue;
 }
 
-._ .formWrapper form .inputField input {
+._ .formWrapper form .inputField input,
+._ .formWrapper form .inputField select {
   border: 2px solid rgba(var(--input-border-rgb), 1);
   background-color: rgba(var(--input-border-rgb), 0.05);
   line-height: 2rem;
