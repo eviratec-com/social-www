@@ -420,9 +420,8 @@ export const getServerSideProps: GetServerSideProps<{ feeds: Feed[] }> = async (
 
   if (!feeds || feeds.length < 1) {
     return {
-      redirect: {
-        destination: '/',
-        permanent: false,
+      props: {
+        feeds: [],
       },
     }
   }
