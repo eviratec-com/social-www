@@ -48,6 +48,12 @@
   font-weight: 300;
 }
 
+._ .formWrapper form .inputField input:hover,
+._ .formWrapper form .inputField input:focus,
+._ .formWrapper form .inputField input:active {
+  border-color: orangered;
+}
+
 ._ .formWrapper form .submitButtonWrapper {
   display: flex;
   flex-direction: column;
