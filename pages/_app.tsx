@@ -99,8 +99,12 @@ function App({ Component, pageProps }: Props) {
 
   // Load list of feeds
   useEffect(() => {
+    if (allFeeds.length > 0) {
+      return
+    }
+
     refreshFeeds()
-  }, [])
+  }, [refreshFeeds, allFeeds.length])
 
   return (
     <>
