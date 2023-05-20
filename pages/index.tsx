@@ -34,7 +34,7 @@ user registration, private messaging, public feeds (aka boards, or forums), \
 custom profile fields, reserved usernames, custom domains, and BYO branding."
 
 const META_OG_IMAGE = "\
-https://www.eviratecsocial.com/og-social-platform.png"
+https://www.eviratecsocial.com/og.png"
 
 const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [allFeeds, setAllFeeds] = useState<Feed[]>(feeds)
