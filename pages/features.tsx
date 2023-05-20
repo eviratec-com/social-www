@@ -446,7 +446,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           <section className={styles.section}>
             <TextBlock>
               <p>
-                Show your customers it's really you, by adding your own logo
+                Show your customers it&apos;s really you, by adding your own logo
                 and brand colours to your site.
               </p>
 
