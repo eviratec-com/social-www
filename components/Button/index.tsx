@@ -15,23 +15,22 @@ export default function Button({ children, href, onClick, className }: Props) {
   return (
     <>
       {!href &&
-        <div
+        <button
           className={`${styles._} ${className ? className : ''}`}
           onClick={onClick}
         >
           {children}
-        </div>
+        </button>
       ||
-        <div className={`${styles._} ${className ? className : ''}`}>
-          <Link
-            href={href}
-            onClick={onClick}
-            scroll={true}
-            prefetch={false}
-          >
-            {children}
-          </Link>
-        </div>
+        <Link
+          href={href}
+          onClick={onClick}
+          scroll={true}
+          prefetch={false}
+          className={`${styles._} ${className ? className : ''}`}
+        >
+          {children}
+        </Link>
       }
     </>
   )
