@@ -5,7 +5,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/PlansAndPricing.module.css'
 
 import fetchFeeds from '@/functions/fetchFeeds'
 
@@ -68,47 +68,10 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
           Plans &amp; Pricing
         </h1>
 
-        <section className={`${styles.section} ${styles.featuresSection}`}>
+        <section className={`${styles.section}`}>
           <TextBlock>
-            <div className={styles.twoCol}>
-              <div className={styles.col}>
-                <h2>Platform Features</h2>
-
-                <ul>
-                  <li>BYO/Custom domain name</li>
-                  <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
-                  <li>BYO branding<br /><span>(text, logo, &amp; colours)</span></li>
-                  <li>Reserved usernames</li>
-                  <li>User photo uploads<br /><span>(up to 50MB per file)</span></li>
-                  <li>Automatic Photo Processing<br /><span>Automatic optimise+resize photos on user upload</span></li>
-                  <li>Custom Profile Fields</li>
-                  <li>Bcrypt Password Security<br /><span>Passwords stored using one-way encryption</span></li>
-                  <li>Custom Account Status<br /><span>(e.g. Unverified, Admin, ID Verified)</span></li>
-                  <li>Signup Age Limit</li>
-                </ul>
-
-                <h2>All Plans Include</h2>
-
-                <ul>
-                  <li>100GB Storage</li>
-                  <li>1TB Transfer (outbound) per month</li>
-                  <li>Fully-managed hosting</li>
-                  <li>Fault-tolerant infrastructure</li>
-                  <li>Daily backups</li>
-                  <li>Set-up in 2 business days<br /><span>(or 20% discount for 12-months)</span></li>
-                  <li>Free Technical Support</li>
-                </ul>
-
-                <h2>Technical Support</h2>
-
-                <ul>
-                  <li>Phone: <span>(+61482465983)</span><br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
-                  <li>Email: <span>(support@eviratec.com)</span><br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
-                  <li>Customer Portal:<br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
-                </ul>
-              </div>
-
-              <div className={styles.col}>
+            <div className={styles.plans}>
+              <div className={styles.planWrapper}>
                 <div className={styles.plan}>
                   <h3>Lite</h3>
 
@@ -123,11 +86,15 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>5 User Accounts</li>
                   </ul>
 
+                  <div className={styles.spacer}></div>
+
                   <Button href="/join" className={styles.ctaBtn}>
                     Create An Account
                   </Button>
                 </div>
+              </div>
 
+              <div className={styles.planWrapper}>
                 <div className={styles.plan}>
                   <h3>Standard</h3>
 
@@ -142,11 +109,15 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>25 User Accounts</li>
                   </ul>
 
+                  <div className={styles.spacer}></div>
+
                   <Button href="/join" className={styles.ctaBtn}>
                     Create An Account
                   </Button>
                 </div>
+              </div>
 
+              <div className={styles.planWrapper}>
                 <div className={styles.plan}>
                   <h3>Premium</h3>
 
@@ -161,11 +132,15 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>125 User Accounts</li>
                   </ul>
 
+                  <div className={styles.spacer}></div>
+
                   <Button href="/join" className={styles.ctaBtn}>
                     Create An Account
                   </Button>
                 </div>
+              </div>
 
+              <div className={styles.planWrapper}>
                 <div className={styles.plan}>
                   <h3>Enterprise</h3>
 
@@ -181,13 +156,34 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     <li>Unlimited User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.ctaBtn}>
-                    Create An Account
+                  <Button href="/contact-us" className={styles.ctaBtn}>
+                    Contact Us For A Quote
                   </Button>
                 </div>
+              </div>
+            </div>
+          </TextBlock>
+        </section>
 
-                <h3>Excess Usage</h3>
+        <section className={`${styles.section}`}>
+          <TextBlock>
+            <div className={styles.twoCol}>
+              <div className={styles.col}>
+                <h2>Platform Features</h2>
 
+                <ul>
+                  <li>BYO/Custom domain name<br /><span>Bring your own fully-qualified domain name</span></li>
+                  <li>BYO branding<br /><span>(text, logo, &amp; colours)</span></li>
+                  <li>Reserved usernames</li>
+                  <li>User photo uploads<br /><span>(up to 50MB per file)</span></li>
+                  <li>Automatic Photo Processing<br /><span>Automatic optimise+resize photos on user upload</span></li>
+                  <li>Custom Profile Fields</li>
+                  <li>Bcrypt Password Security<br /><span>Passwords stored using one-way encryption</span></li>
+                  <li>Custom Account Status<br /><span>(e.g. Unverified, Email Verified, ID Verified)</span></li>
+                  <li>Signup Age Limit</li>
+                </ul>
+
+                <h2>Excess Usage</h2>
                 <ul>
                   <li>
                     Storage: &#x24;1.00<br />
@@ -197,6 +193,29 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                     Transfer (outbound): &#x24;1.00<br />
                     <span>Per month, per gigabyte (GB)</span>
                   </li>
+                </ul>
+              </div>
+
+              <div className={styles.col}>
+                <h2>All Plans Include</h2>
+
+                <ul>
+                  <li>100GB Storage</li>
+                  <li>1TB Transfer (outbound) per month</li>
+                  <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
+                  <li>Daily backups</li>
+                  <li>Fully-managed hosting</li>
+                  <li>Free Technical Support</li>
+                  <li>Fault-tolerant infrastructure</li>
+                  <li>Set-up in 2 business days<br /><span>(or 20% discount for 12-months)</span></li>
+                </ul>
+
+                <h2>Technical Support</h2>
+
+                <ul>
+                  <li>Phone: <span>(+61482465983)</span><br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
+                  <li>Email: <span>(support@eviratec.com)</span><br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
+                  <li>Customer Portal:<br />Monday to Friday: 9AM to 5PM<br /><span>Aus Eastern Standard Time (AEST)</span></li>
                 </ul>
               </div>
             </div>
