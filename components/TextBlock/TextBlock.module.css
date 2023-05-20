@@ -6,7 +6,8 @@
   font-weight: 200;
 }
 
-._ p {
+._ p,
+._ ul {
   margin-bottom: 2rem;
 }
 
