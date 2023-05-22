@@ -31,6 +31,13 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          NEXT_PUBLIC_STRIPE_RETURN_URL: ${{ secrets.STRIPE_RETURN_URL }}
+          NEXT_PUBLIC_STRIPE_ESP_LITE_PLAN: ${{ secrets.STRIPE_ESP_LITE_PLAN }}
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_STRIPE_ESP_PREMIUM_PLAN: ${{ secrets.STRIPE_ESP_PREMIUM_PLAN }}
+          NEXT_PUBLIC_STRIPE_ESP_STANDARD_PLAN: ${{ secrets.STRIPE_ESP_STANDARD_PLAN }}
+
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
