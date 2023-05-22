@@ -298,7 +298,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     }
 
     if (true === success && true === payError) {
-      processPayment()
+      processPayment(undefined)
       return
     }
 
