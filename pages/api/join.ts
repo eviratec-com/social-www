@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import * as Stripe from 'stripe'
 
 import signup from '@/functions/signup'
 import setCookie from '@/functions/setCookie'
@@ -8,13 +7,15 @@ import checkUsername from '@/functions/users/checkUsername'
 import createCustomer from '@/functions/payments/stripe/createCustomer'
 import createSite from '@/functions/sites/createSite'
 import claimSiteById from '@/functions/users/claimSiteById'
+import setUserMetaValue from '@/functions/users/meta/setMetaValue'
 
 import type { Session } from '@/types/Session'
+import type { NewSite, Site } from '@/types/Site'
 import type { User, UserRegistration } from '@/types/User'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Session|Error>
+  res: NextApiResponse<{ session: Session, stripe: { customer: string } }|Error>
 ) {
   try {
     const {
@@ -22,8 +23,8 @@ export default async function handler(
       display_name,
       username,
       password,
-      siteName,
-      sitePlan,
+      site_name,
+      site_plan,
       site,
       dob
     } = req.body
@@ -44,6 +45,9 @@ export default async function handler(
       display_name,
       username,
       password,
+      site_name,
+      site_plan,
+      site,
       dob,
     })
 
@@ -61,7 +65,7 @@ export default async function handler(
 
     setCookie(res, 'eviratecseshid', s.token, { path: '/', maxAge: 86400*3 })
 
-    const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
     const _stripeCust = await createCustomer(stripe)({
       email: email_address,
       user: u.id,
@@ -76,21 +80,26 @@ export default async function handler(
     })
 
     await setUserMetaValue(u.id, 'stripe_customer_id', _stripeCust.id)
-    await setUserMetaValue(u.id, 'next_plan_price_id', 'price_1NAApTK0rKl89eyeewomgfK9')
+    await setUserMetaValue(u.id, 'next_plan_price_id', site_plan)
 
     const userSite: Site = await createSite({
-      name: siteName,
-      plan: sitePlan,
+      name: site_name,
+      plan: site_plan,
       fqdn: site,
       subscription: 'PENDING'
     })
 
     await claimSiteById(u.id, userSite.id)
 
-    await setUserMetaValue(u.id, 'next_plan_for_site', userSite.id)
+    await setUserMetaValue(u.id, 'next_plan_for_site', `${userSite.id}`)
 
     // Send response body
-    res.status(200).json(s)
+    res.status(200).json({
+      session: s,
+      stripe: {
+        customer: _stripeCust.id,
+      },
+    })
   }
   catch (err) {
     res.status(400).json({

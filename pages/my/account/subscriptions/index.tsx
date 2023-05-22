@@ -78,28 +78,28 @@ const MySubscriptionsPage: NextPage<Props> = ({ _accounts, _session }: InferGetS
     session.login(_session)
   }, [session, _session])
 
-  const fetchAccounts = useCallback(async (token) => {
-    setLoading(true)
-
-    const data = {
-      headers: {
-        'X-Eviratecnet-Token': token,
-        'Content-Type': 'application/json',
-      }
-    }
-
-    const res = fetch('/api/my/accounts', data)
-    if (200 !== res.status) {
-      setLoading(false)
-      return
-    }
-
-    const json = res.json()
-    const a: UserAccount[] = [...json]
-
-    setAccounts(a)
-    setLoading(false)
-  }, [setAccounts])
+  // const fetchAccounts = useCallback(async (token) => {
+  //   setLoading(true)
+  //
+  //   const data = {
+  //     headers: {
+  //       'X-Eviratecnet-Token': token,
+  //       'Content-Type': 'application/json',
+  //     }
+  //   }
+  //
+  //   const res = fetch('/api/my/accounts', data)
+  //   if (200 !== res.status) {
+  //     setLoading(false)
+  //     return
+  //   }
+  //
+  //   const json = res.json()
+  //   const a: UserAccount[] = [...json]
+  //
+  //   setAccounts(a)
+  //   setLoading(false)
+  // }, [setAccounts])
 
   useEffect(() => {
     (async () => {
@@ -145,18 +145,6 @@ const MySubscriptionsPage: NextPage<Props> = ({ _accounts, _session }: InferGetS
           </div>
         }
 
-        {accounts.length > 0 &&
-          <div>
-            Accounts:
-            {accounts.map((account: UserAccount) => {
-              <div>
-                External ID: {account.external_id}
-                <PlanSelection />
-              </div>
-            })}
-          </div>
-        }
-
 
 
       </main>
@@ -187,10 +175,7 @@ export const getServerSideProps: GetServerSideProps<{ _session?: Session, _accou
     }
   }
 
-  const _accounts: UserAccount[] = await fetchUserAccountsByProvider(
-    _session.user,
-    STRIPE_PROVIDER_NUM
-  )
+  const _accounts: UserAccount[] = []
 
   return {
     props: {

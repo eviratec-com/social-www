@@ -11,6 +11,8 @@ import styles from '@/styles/MyAccount.module.css'
 
 import fetchSessionByToken from '@/functions/fetchSessionByToken'
 import fetchUserMetaValue from '@/functions/users/meta/fetchMetaValue'
+import createSubscription from '@/functions/payments/stripe/createSubscription'
+import updateSiteSubscriptionById from '@/functions/sites/updateSubscriptionById'
 import fetchUserAccountsByProvider from '@/functions/users/fetchAccountsByProvider'
 
 import SessionContext from '@/contexts/SessionContext'
@@ -52,10 +54,10 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
-  const paymentIntent = context.req.query.payment_intent || ''
-  const paymentIntentClientSecret = context.req.query.payment_intent_client_secret || ''
+  const setupIntent = context.query.setup_intent || ''
+  const setupIntentClientSecret = context.query.setup_intent_client_secret || ''
 
-  if (paymentIntent) {
+  if (setupIntent) {
     // attempt to charge for plan
     const stripeCustomerId = await fetchUserMetaValue(
       _session.user,
@@ -72,11 +74,43 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       'next_plan_for_site'
     )
 
-    const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
+    // const intent = await stripe.paymentIntents.update(
+    //   paymentIntent,
+    //   {customer: stripeCustomerId}
+    // )
+
+    // const setupResult = await stripe.setupIntents.retrieve(
+    //   setupIntent
+    // )
+
+    const setupResult = await stripe.confirmCardSetup(
+      setupIntentClientSecret,
+      {
+        payment_method: {
+          customer: stripeCustomerId,
+        },
+      }
+    )
+
+    if (setupResult.error) {
+      return {
+        redirect: {
+          destination: '/my/account/subscriptions?error=',
+          permanent: false,
+        },
+      }
+    }
+
+    const paymentMethod = await stripe.paymentMethods.attach(
+      setupResult.payment_method,
+      {customer: stripeCustomerId}
+    );
 
     const subscription = await createSubscription(stripe)(
       stripeCustomerId,
-      paymentIntent,
+      paymentMethod.id,
       nextPlanPriceId,
       _session.user,
       nextPlanForSite

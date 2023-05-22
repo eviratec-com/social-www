@@ -35,8 +35,8 @@ export type UserRegistration = {
   display_name: string
   username: string
   password: string
-  siteName: string
-  sitePlan: string
+  site_name: string
+  site_plan: string
   site: string
   dob: string
 }

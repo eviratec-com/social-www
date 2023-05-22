@@ -1,7 +1,17 @@
-import React, { useCallback, useContext, useId, useState } from 'react'
-import { PaymentElement } from '@stripe/react-stripe-js'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useState
+} from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import {
+  useStripe,
+  useElements,
+  PaymentElement
+} from '@stripe/react-stripe-js'
 
 import ProgressBar from '@/components/ProgressBar'
 
@@ -23,7 +33,19 @@ interface YearMonthDate {
   date: number
 }
 
-export default function SignupForm() {
+interface Props {
+  onChangePlan?: (newPlan: string) => void
+  onChangeAmount?: (newAmount: number) => void
+}
+
+interface JoinResult {
+  session: Session
+  stripe: {
+    customer: string
+  }
+}
+
+export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const router = useRouter()
 
   const stripe = useStripe()
@@ -48,9 +70,9 @@ export default function SignupForm() {
   const [dob, setDob] = useState<string>('')
 
   const [site, setSite] = useState<string>('')
-  const [domain, setDomain] = useState<boolean>('.eviratecsocial.life')
+  const [domain, setDomain] = useState<string>('.eviratecsocial.life')
   const [siteName, setSiteName] = useState<string>('')
-  const [sitePlan, setSitePlan] = useState<string>('')
+  const [sitePlan, setSitePlan] = useState<string>(PLAN.LITE_PLAN.externalId.stripe)
 
   const [touchedFields, setTouchedFields] = useState<string[]>([])
 
@@ -59,9 +81,12 @@ export default function SignupForm() {
   const [loadingUsername, setLoadingUsername] = useState<boolean>(false)
   const [usernameError, setUsernameError] = useState<string>('')
   const [acceptLegal, setAcceptLegal] = useState<boolean>(false)
+  const [payError, setPayError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+
+  const [joinResult, setJoinResult] = useState<JoinResult|null>(null)
 
   useEffect(() => {
     setSite(`${username}${domain}`)
@@ -218,8 +243,60 @@ export default function SignupForm() {
     return hasLowerCaseChar && hasUpperCaseChar && hasNumber && isGtMinLength
   }, [])
 
+  const processPayment = useCallback(async () => {
+    // Trigger form validation and wallet collection
+    const { error: submitError } = await elements.submit()
+
+    if (submitError) {
+      setError(submitError.message)
+      return
+    }
+
+    // Create the SetupIntent and obtain clientSecret
+    const res = await fetch(
+      `/api/setupIntent`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ customer: joinResult.stripe.customer }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+
+    const { client_secret: clientSecret } = await res.json()
+
+    // Confirm the SetupIntent using the details collected by the Payment Element
+    const { error } = await stripe.confirmSetup({
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: process.env.NEXT_PUBLIC_STRIPE_RETURN_URL,
+      },
+    });
+
+    if (error) {
+      // This point is only reached if there's an immediate error when
+      // confirming the setup. Show the error to your customer (for example, payment details incomplete)
+      setError(error.message);
+    } else {
+      // Your customer is redirected to your `return_url`. For some payment
+      // methods like iDEAL, your customer is redirected to an intermediate
+      // site first to authorize the payment, then redirected to the `return_url`.
+    }
+  }, [elements, joinResult])
+
   const handleSubmit = useCallback((event): void => {
     event.preventDefault()
+
+    if (true === loading) {
+      return
+    }
+
+    if (true === success && true === payError) {
+      processPayment()
+      return
+    }
 
     if (!displayName) {
       touch(displayNameInputId)
@@ -266,8 +343,8 @@ export default function SignupForm() {
       display_name: displayName,
       username,
       password,
-      siteName,
-      sitePlan,
+      site_name: siteName,
+      site_plan: sitePlan,
       site,
       dob,
     }
@@ -291,15 +368,9 @@ export default function SignupForm() {
         result.json().then(json => {
           setLoading(false)
           setSuccess(true)
-          session.login(json)
-
-          const { error } = await stripe.confirmPayment({
-            //`Elements` instance that was used to create the Payment Element
-            elements,
-            confirmParams: {
-              return_url: 'http://localhost:3000/my/account/subscriptions/create/success',
-            },
-          });
+          setJoinResult(json)
+          session.login(json.session)
+          processPayment()
         })
       })
       .catch((err) => {
@@ -311,12 +382,24 @@ export default function SignupForm() {
     touch, emailAddress, displayName, username, password, siteName, sitePlan,
     site, dob, acceptLegal, displayNameInputId, emailAddressInputId,
     usernameInputId, passwordInputId, dobInputId, tosAcceptInputId, validEmail,
-    validUsername, validPassword, validDob, session, router, stripe, elements
+    validUsername, validPassword, validDob, session, router, stripe, elements,
+    success, payError
   ])
 
   const touched = useCallback((key: string): boolean => {
     return touchedFields.indexOf(key) > -1
   }, [touchedFields])
+
+  useEffect(() => {
+    if (!sitePlan) {
+      return
+    }
+
+    onChangePlan && onChangePlan(sitePlan)
+    onChangeAmount && onChangeAmount(plans.filter(plan => {
+      return plan.externalId.stripe === sitePlan
+    })[0].ppm*100)
+  }, [sitePlan, plans])
 
   return (
     <div className={styles._}>
@@ -528,7 +611,12 @@ export default function SignupForm() {
               >
                 {plans.length && plans.map((plan: Plan) => {
                   return (
-                    <option value={plan.externalId.stripe}>{plan.title} (${plan.ppm} /month)</option>
+                    <option
+                      value={plan.externalId.stripe}
+                      key={`opt/${plan.externalId.stripe}`}
+                    >
+                      {plan.title} (${plan.ppm} /month)
+                    </option>
                   )
                 })}
               </select>

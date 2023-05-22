@@ -1,19 +1,6 @@
 import dbClient from '@/db'
 
-interface NewSite {
-  name: string
-  plan: string
-  fqdn: string
-  subscription: string
-}
-
-type Site = {
-  id: number
-  name: string
-  plan: string
-  fqdn: string
-  subscription: string
-}
+import type { NewSite, Site } from '@/types/Site'
 
 export default async function createSite(d: NewSite): Promise<Site> {
   const {

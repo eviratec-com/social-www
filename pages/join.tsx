@@ -18,21 +18,43 @@ import FeedPageHeading from '@/components/FeedPageHeading'
 
 import SessionContext from '@/contexts/SessionContext'
 
+import type { Plan } from '@/types/Plan'
+
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 )
 
 interface StripeOptions {
-  clientSecret?: string
+  amount: number
+  mode: 'setup' | 'payment' | 'subscription'
+  currency: string
 }
 
 const JoinPage: NextPage = () => {
-  const [options, setOptions] = useState<StripeOptions>({})
+  const [options, setOptions] = useState<StripeOptions>({
+    amount: 1500,
+    mode: 'subscription',
+    currency: 'aud',
+  })
 
-  useEffect(() => {
-    fetch('/api/paymentIntent?amt=1500')
-      .then((res) => res.json())
-      .then((data) => setOptions({ clientSecret: data.clientSecret }))
+  // useEffect(() => {
+  //   fetch('/api/setupIntent?amt=1500')
+  //     .then((res) => res.json())
+  //     .then((data) => setOptions({ clientSecret: data.clientSecret }))
+  // }, [])
+  //
+  // const refreshPaymentIntent = useCallback((newAmount: number) => {
+  //   fetch(`/api/setupIntent?amt=${newPlan.ppm}00`)
+  //     .then((res) => res.json())
+  //     .then((data) => setOptions({ clientSecret: data.clientSecret }))
+  // }, [])
+
+  const refreshIntent = useCallback((newAmount: number) => {
+    setOptions({
+      amount: newAmount,
+      mode: 'subscription',
+      currency: 'aud',
+    })
   }, [])
 
   return (
@@ -56,7 +78,7 @@ const JoinPage: NextPage = () => {
         </FeedPageHeading>
 
         <Elements stripe={stripePromise} options={options}>
-          <SignupForm />
+          <SignupForm onChangeAmount={newAmount => refreshIntent(newAmount)} />
         </Elements>
       </main>
 

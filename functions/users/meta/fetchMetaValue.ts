@@ -10,10 +10,10 @@ export default async function fetchUserMetaValue(
   const um: Promise<string> = new Promise((resolve, reject) => {
     const query = `SELECT "user_meta"."value" `
       + `FROM "user_meta" `
-      + `WHERE "user" = $1::integer AND = "key" = $2::varchar `
+      + `WHERE "user" = $1::integer AND "key" = $2::varchar `
       + `AND "hidden" IS NULL`
 
-    client.query(query, [user], (err, res) => {
+    client.query(query, [user, key], (err, res) => {
       if (err) {
         reject(err)
         client.release() // release the client
