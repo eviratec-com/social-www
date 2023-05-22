@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useId, useState } from 'react'
+import { PaymentElement } from '@stripe/react-stripe-js'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -8,6 +9,9 @@ import styles from './SignupForm.module.css'
 
 import SessionContext from '@/contexts/SessionContext'
 
+import * as PLAN from '@/inc/plans'
+
+import type { Plan } from '@/types/Plan'
 import type { UserRegistration } from '@/types/User'
 import type { Credentials, Session } from '@/types/Session'
 
@@ -22,6 +26,9 @@ interface YearMonthDate {
 export default function SignupForm() {
   const router = useRouter()
 
+  const stripe = useStripe()
+  const elements = useElements()
+
   const session = useContext(SessionContext)
 
   const emailAddressInputId: string = useId()
@@ -31,11 +38,19 @@ export default function SignupForm() {
   const passwordInputId: string = useId()
   const dobInputId: string = useId()
 
+  const siteNameInputId: string = useId()
+  const sitePlanSelectId: string = useId()
+
   const [emailAddress, setEmailAddress] = useState<string>('')
   const [displayName, setDisplayName] = useState<string>('')
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [dob, setDob] = useState<string>('')
+
+  const [site, setSite] = useState<string>('')
+  const [domain, setDomain] = useState<boolean>('.eviratecsocial.life')
+  const [siteName, setSiteName] = useState<string>('')
+  const [sitePlan, setSitePlan] = useState<string>('')
 
   const [touchedFields, setTouchedFields] = useState<string[]>([])
 
@@ -47,6 +62,16 @@ export default function SignupForm() {
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+
+  useEffect(() => {
+    setSite(`${username}${domain}`)
+  }, [username, domain])
+
+  const [plans, setPlans] = useState<Plan[]>([
+    PLAN.LITE_PLAN,
+    PLAN.STANDARD_PLAN,
+    PLAN.PREMIUM_PLAN,
+  ])
 
   // validInputChar(input: string)
   // prevents input of invalid chars in username(domain) field
@@ -226,6 +251,13 @@ export default function SignupForm() {
       return
     }
 
+    if (!stripe || !elements) {
+      // Stripe.js hasn't yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      setError('Loading payment form...')
+      return;
+    }
+
     setError('')
     setLoading(true)
 
@@ -234,6 +266,9 @@ export default function SignupForm() {
       display_name: displayName,
       username,
       password,
+      siteName,
+      sitePlan,
+      site,
       dob,
     }
 
@@ -257,7 +292,14 @@ export default function SignupForm() {
           setLoading(false)
           setSuccess(true)
           session.login(json)
-          router.push('/links')
+
+          const { error } = await stripe.confirmPayment({
+            //`Elements` instance that was used to create the Payment Element
+            elements,
+            confirmParams: {
+              return_url: 'http://localhost:3000/my/account/subscriptions/create/success',
+            },
+          });
         })
       })
       .catch((err) => {
@@ -266,10 +308,10 @@ export default function SignupForm() {
         setError(err.message)
       })
   }, [
-    touch, emailAddress, displayName, username, password, dob, acceptLegal,
-    displayNameInputId, emailAddressInputId, usernameInputId, passwordInputId,
-    dobInputId, tosAcceptInputId, validEmail, validUsername, validPassword,
-    validDob, session, router
+    touch, emailAddress, displayName, username, password, siteName, sitePlan,
+    site, dob, acceptLegal, displayNameInputId, emailAddressInputId,
+    usernameInputId, passwordInputId, dobInputId, tosAcceptInputId, validEmail,
+    validUsername, validPassword, validDob, session, router, stripe, elements
   ])
 
   const touched = useCallback((key: string): boolean => {
@@ -280,176 +322,229 @@ export default function SignupForm() {
     <div className={styles._}>
       <div className={styles.formWrapper}>
         <form name="login" onSubmit={handleSubmit}>
-          <div className={styles.inputField}>
-            <label htmlFor={displayNameInputId}>Your Full Name</label>
-            <input
-              id={displayNameInputId}
-              value={displayName}
-              name="displayName"
-              placeholder="e.g. John Smith"
-              onChange={e => setDisplayName(e.target.value)}
-              onBlur={e => touch(displayNameInputId)}
-            />
-
-            {touched(displayNameInputId) && displayName.length < 1 &&
-              <p className={styles.fieldError}>
-                Please choose a display name.
-              </p>
-            }
-          </div>
-
-          <div className={styles.inputField}>
-            <label htmlFor={emailAddressInputId}>Email Address</label>
-            <input
-              id={emailAddressInputId}
-              value={emailAddress}
-              name="emailAddress"
-              type="email"
-              onChange={e => setEmailAddress(e.target.value)}
-              onBlur={e => touch(emailAddressInputId)}
-            />
-
-            {touched(emailAddressInputId) && !validEmail(emailAddress) &&
-              <p className={styles.fieldError}>
-                Please enter a valid email address.
-              </p>
-            }
-          </div>
-
-          <div className={styles.inputField}>
-            <label htmlFor={passwordInputId}>Password</label>
-            <input
-              id={passwordInputId}
-              value={password}
-              name="password"
-              type="password"
-              onChange={e => setPassword(e.target.value)}
-              onBlur={e => touch(passwordInputId)}
-            />
-
-            {touched(passwordInputId) && !validPassword(password) &&
-              <p className={styles.fieldError}>
-                Passwords must contain:
-                <ul>
-                  <li>At least {MIN_PASSWORD_LENGTH} characters</li>
-                  <li>One upper-case letter</li>
-                  <li>One lower-case letter</li>
-                  <li>One number</li>
-                </ul>
-              </p>
-            }
-          </div>
-
-          <div className={styles.inputField}>
-            <label htmlFor={dobInputId}>Date of Birth</label>
-            <input
-              id={dobInputId}
-              value={dob}
-              name="dob"
-              type="date"
-              onChange={e => setDob(e.target.value)}
-              onBlur={e => touch(dobInputId)}
-            />
-
-            {touched(dobInputId) && !validDob(dob) &&
-              <p className={styles.fieldError}>
-                You must be at least 18 years old to join.
-              </p>
-            }
-          </div>
-
-          <div className={styles.inputField}>
-            <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
-            <div className={styles.urlPicker}>
-              <span className={styles.urlPickerProtocol}>https://</span>
-              <div className={styles.urlPickerInput}>
-                <input
-                  id={usernameInputId}
-                  value={username}
-                  name="username"
-                  placeholder="yourname"
-                  className={styles.usernameInput}
-                  onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
-                  onFocus={e => setUsernameChecked(false)}
-                  onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
-                />
-              </div>
-
-              <div className={styles.urlPickerDomain}>
-                <select>
-                  <option selected>.eviratecsocial.online</option>
-                </select>
-              </div>
-            </div>
-
-            {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
-              <p className={styles.fieldError}>
-                Please enter a valid sub-domain.
-                <br />Sub-domain names must be at least 3 characters.
-              </p>
-            }
-
-            {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
-              <p className={styles.fieldError}>
-                Please enter a valid sub-domain. Sub-domain names may only contain:
-                <ul>
-                  <li>English alphabet (A-Z)</li>
-                  <li>Numbers (0-9)</li>
-                  <li>Hyphens (-)</li>
-                </ul>
-              </p>
-            }
-
-            {loadingUsername &&
-              <p className={styles.fieldSuccess}>Checking availability...</p>
-            }
-
-            {usernameChecked && usernameAvailable &&
-              <p className={styles.fieldSuccess}>
-                {username}.eviratecsocial.online is available!
-              </p>
-            }
-
-            {usernameChecked && !usernameAvailable &&
-              <p className={styles.fieldError}>
-                Domain {username}.eviratecsocial.online is not available.
-              </p>
-            }
-
-            {usernameError &&
-              <p className={styles.fieldError}>{usernameError}</p>
-            }
-          </div>
-
-          <div className={styles.tosAcceptWrapper}>
-            <label>
+          <section className={styles.accountInfo}>
+            <div className={styles.inputField}>
+              <label htmlFor={displayNameInputId}>Your Full Name</label>
               <input
-                type="checkbox"
-                value="accept"
-                onChange={e => setAcceptLegal('accept' == e.target.value)}
+                id={displayNameInputId}
+                value={displayName}
+                name="displayName"
+                placeholder="e.g. John Smith"
+                onChange={e => setDisplayName(e.target.value)}
+                onBlur={e => touch(displayNameInputId)}
               />
 
-              I have read and agree to the
-              <Link href={`/terms`} legacyBehavior>
-                <a target="_blank">Terms of Use</a>
-              </Link>
-              and
-              <Link href={`/privacy`} legacyBehavior>
-                <a target="_blank">Privacy Policy</a>
-              </Link>
-              for EviratecSocial.
-            </label>
+              {touched(displayNameInputId) && displayName.length < 1 &&
+                <p className={styles.fieldError}>
+                  Please choose a display name.
+                </p>
+              }
+            </div>
 
-            {touched(tosAcceptInputId) && true !== acceptLegal &&
-              <p className={styles.fieldError}>
-                Please accept the Terms of Use and Privacy Policy.
-              </p>
-            }
-          </div>
+            <div className={styles.inputField}>
+              <label htmlFor={emailAddressInputId}>Email Address</label>
+              <input
+                id={emailAddressInputId}
+                value={emailAddress}
+                name="emailAddress"
+                type="email"
+                onChange={e => setEmailAddress(e.target.value)}
+                onBlur={e => touch(emailAddressInputId)}
+              />
 
-          <div className={styles.submitButtonWrapper}>
-            <button type="submit" disabled={loading}>Save &amp; Continue</button>
-          </div>
+              {touched(emailAddressInputId) && !validEmail(emailAddress) &&
+                <p className={styles.fieldError}>
+                  Please enter a valid email address.
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={passwordInputId}>Password</label>
+              <input
+                id={passwordInputId}
+                value={password}
+                name="password"
+                type="password"
+                onChange={e => setPassword(e.target.value)}
+                onBlur={e => touch(passwordInputId)}
+              />
+
+              {touched(passwordInputId) && !validPassword(password) &&
+                <p className={styles.fieldError}>
+                  Passwords must contain:
+                  <ul>
+                    <li>At least {MIN_PASSWORD_LENGTH} characters</li>
+                    <li>One upper-case letter</li>
+                    <li>One lower-case letter</li>
+                    <li>One number</li>
+                  </ul>
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={dobInputId}>Date of Birth</label>
+              <input
+                id={dobInputId}
+                value={dob}
+                name="dob"
+                type="date"
+                onChange={e => setDob(e.target.value)}
+                onBlur={e => touch(dobInputId)}
+              />
+
+              {touched(dobInputId) && !validDob(dob) &&
+                <p className={styles.fieldError}>
+                  You must be at least 18 years old to join.
+                </p>
+              }
+            </div>
+
+            <div className={styles.tosAcceptWrapper}>
+              <label>
+                <input
+                  type="checkbox"
+                  value="accept"
+                  onChange={e => setAcceptLegal('accept' == e.target.value)}
+                />
+
+                I have read and agree to the
+                <Link href={`/terms`} legacyBehavior>
+                  <a target="_blank">Terms of Use</a>
+                </Link>
+                and
+                <Link href={`/privacy`} legacyBehavior>
+                  <a target="_blank">Privacy Policy</a>
+                </Link>
+                for EviratecSocial.
+              </label>
+
+              {touched(tosAcceptInputId) && true !== acceptLegal &&
+                <p className={styles.fieldError}>
+                  Please accept the Terms of Use and Privacy Policy.
+                </p>
+              }
+            </div>
+
+            <div className={styles.submitButtonWrapper}>
+              <button type="submit" disabled={loading}>Save &amp; Continue</button>
+            </div>
+          </section>
+
+          <section className={styles.siteInfo}>
+            <div className={styles.inputField}>
+              <label htmlFor={siteNameInputId}>Site Name</label>
+              <input
+                id={siteNameInputId}
+                value={siteName}
+                name="siteName"
+                placeholder="e.g. John's Book Club"
+                onChange={e => setSiteName(e.target.value)}
+                onBlur={e => touch(siteNameInputId)}
+              />
+
+              {touched(siteNameInputId) && siteName.length < 1 &&
+                <p className={styles.fieldError}>
+                  Please choose a site name.
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
+              <div className={styles.urlPicker}>
+                <span className={styles.urlPickerProtocol}>https://</span>
+                <div className={styles.urlPickerInput}>
+                  <input
+                    id={usernameInputId}
+                    value={username}
+                    name="username"
+                    placeholder="yourname"
+                    className={styles.usernameInput}
+                    onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
+                    onFocus={e => setUsernameChecked(false)}
+                    onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
+                  />
+                </div>
+
+                <div className={styles.urlPickerDomain}>
+                  <select
+                    value={domain}
+                    onChange={e => setDomain(e.target.value)}
+                  >
+                    <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
+                  </select>
+                </div>
+              </div>
+
+              {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain.
+                  <br />Sub-domain names must be at least 3 characters.
+                </p>
+              }
+
+              {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain. Sub-domain names may only contain:
+                  <ul>
+                    <li>English alphabet (A-Z)</li>
+                    <li>Numbers (0-9)</li>
+                    <li>Hyphens (-)</li>
+                  </ul>
+                </p>
+              }
+
+              {loadingUsername &&
+                <p className={styles.fieldSuccess}>Checking availability...</p>
+              }
+
+              {usernameChecked && usernameAvailable &&
+                <p className={styles.fieldSuccess}>
+                  {username}.eviratecsocial.online is available!
+                </p>
+              }
+
+              {usernameChecked && !usernameAvailable &&
+                <p className={styles.fieldError}>
+                  Domain {username}.eviratecsocial.online is not available.
+                </p>
+              }
+
+              {usernameError &&
+                <p className={styles.fieldError}>{usernameError}</p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={sitePlanSelectId}>Select Plan</label>
+              <select
+                id={sitePlanSelectId}
+                value={sitePlan}
+                name="sitePlan"
+                onChange={e => setSitePlan(e.target.value)}
+                onBlur={e => touch(sitePlanSelectId)}
+              >
+                {plans.length && plans.map((plan: Plan) => {
+                  return (
+                    <option value={plan.externalId.stripe}>{plan.title} (${plan.ppm} /month)</option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <div className={styles.inputField}>
+              <PaymentElement options={{
+                defaultValues: {
+                  billingDetails: {
+                    name: displayName,
+                    email: emailAddress,
+                  },
+                },
+              }} />
+            </div>
+          </section>
         </form>
       </div>
 

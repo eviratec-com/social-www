@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
 import styles from '@/styles/FormPage.module.css'
 
 import fetchPosts from '@/functions/fetchPosts'
@@ -16,7 +18,23 @@ import FeedPageHeading from '@/components/FeedPageHeading'
 
 import SessionContext from '@/contexts/SessionContext'
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+)
+
+interface StripeOptions {
+  clientSecret?: string
+}
+
 const JoinPage: NextPage = () => {
+  const [options, setOptions] = useState<StripeOptions>({})
+
+  useEffect(() => {
+    fetch('/api/paymentIntent?amt=1500')
+      .then((res) => res.json())
+      .then((data) => setOptions({ clientSecret: data.clientSecret }))
+  }, [])
+
   return (
     <>
       <Head>
@@ -34,10 +52,12 @@ const JoinPage: NextPage = () => {
 
       <main className={styles.main}>
         <FeedPageHeading>
-          Create Yours
+          Create Your Site
         </FeedPageHeading>
 
-        <SignupForm />
+        <Elements stripe={stripePromise} options={options}>
+          <SignupForm />
+        </Elements>
       </main>
 
       <Footer />

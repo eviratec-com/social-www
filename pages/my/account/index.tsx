@@ -85,10 +85,15 @@ const MyAccountPage: NextPage<Props> = ({ _session }: InferGetServerSidePropsTyp
         }
 
         <div className={styles.tools}>
-          <h2>&#127759; Public Settings</h2>
+          <h2>&#127759; Account Settings</h2>
           <ul>
             <li>
               <Button href={`/me`}>My Profile</Button>
+            </li>
+            <li>
+              <Button href={`/my/account/subscriptions`}>
+                My Subscriptions
+              </Button>
             </li>
           </ul>
         </div>

@@ -11,6 +11,12 @@ export type User = {
   modified?: number
 }
 
+export type UserAccount = {
+  id: number
+  external_id: string
+  external_provider: number
+}
+
 export type UserProfile = {
   id: number
   dob: string
@@ -29,6 +35,9 @@ export type UserRegistration = {
   display_name: string
   username: string
   password: string
+  siteName: string
+  sitePlan: string
+  site: string
   dob: string
 }
 

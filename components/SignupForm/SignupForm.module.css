@@ -2,7 +2,6 @@
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  width: 385px;
   background-color: transparent;
 }
 
@@ -14,7 +13,22 @@
 
 ._ .formWrapper form {
   display: flex;
+  flex-direction: row;
+}
+
+._ .formWrapper form section.accountInfo,
+._ .formWrapper form section.siteInfo {
+  display: flex;
   flex-direction: column;
+  width: 385px;
+}
+
+._ .formWrapper form section.accountInfo {
+  margin-right: 2rem;
+}
+
+._ .formWrapper form section.siteInfo {
+
 }
 
 ._ .formWrapper form .inputField {
@@ -61,10 +75,12 @@
 
 }
 
-._ .formWrapper form .inputField div.urlPicker select {
+._ .formWrapper form .inputField select {
   padding: 0;
   font-size: 1rem;
   font-weight: 200;
+  height: 2rem;
+  box-sizing: content-box;
 }
 
 ._ .formWrapper form .inputField input,
@@ -201,5 +217,18 @@
 @media screen and (max-width: 700px) {
   ._ {
     width: 100%;
+  }
+
+  ._ .formWrapper form {
+    flex-direction: column;
+  }
+
+  ._ .formWrapper form section.accountInfo,
+  ._ .formWrapper form section.siteInfo {
+    width: auto;
+  }
+
+  ._ .formWrapper form section.accountInfo {
+    margin-right: none;
   }
 }
