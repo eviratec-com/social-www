@@ -9,8 +9,8 @@ interface Props {
 export default function IdentityStatus({ status }: Props) {
   if ('UNVERIFIED' === status) {
     return (
-      <span className={`${styles._} ${styles.unverified}`}>
-        &#10006; Unverified
+      <span className={`${styles._} ${styles.new}`}>
+        &#128970; New Customer
       </span>
     )
   }

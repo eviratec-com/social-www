@@ -36,11 +36,20 @@
 }
 
 .main .intro {
-
+  margin-bottom: 2rem;
 }
 
 .main .intro p {
   font-weight: 300;
+}
+
+.main .tools .accountBtn {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.main .tools ul li:last-of-type .accountBtn {
+  margin-bottom: 0;
 }
 
 /* Mobile */

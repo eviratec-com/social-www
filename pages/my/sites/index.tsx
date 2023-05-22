@@ -8,30 +8,50 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '@/styles/MyAccount.module.css'
 
+import fetchSitesByUser from '@/functions/sites/fetchByUser'
 import fetchSessionByToken from '@/functions/fetchSessionByToken'
+import fetchUserAccountsByProvider from '@/functions/users/fetchAccountsByProvider'
 
 import Footer from '@/components/Footer'
 import Button from '@/components/Button'
 import ProgressBar from '@/components/ProgressBar'
 import LogoutButton from '@/components/LogoutButton'
+import PlanSelection from '@/components/PlanSelection'
 import FeedPageHeading from '@/components/FeedPageHeading'
 
 import SessionContext from '@/contexts/SessionContext'
+import PaymentIntentContext from '@/contexts/PaymentIntentContext'
 
+import type { Site } from '@/types/Site'
 import type { Session } from '@/types/Session'
 
 interface Props {
   _session?: Session
+  _sites?: Site[]
 }
 
-const MyAccountPage: NextPage<Props> = ({ _session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const STRIPE_PROVIDER_NUM = 10
+
+const MySitesPage: NextPage<Props> = ({ _sites, _session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const session = useContext(SessionContext)
 
   const [loading, setLoading] = useState<boolean>(true)
   const [displayName, setDisplayName] = useState<string>('')
 
+  const [clientSecret, setClientSecret] = useState<string>('')
+
+  const [sites, setSites] = useState<Site[]>(_sites || [])
+
   useEffect(() => {
+    setSites([..._sites])
+  }, [_sites])
+
+  useEffect(() => {
+    if (session && session.currentSession && session.currentSession.token) {
+      return
+    }
+
     if (!_session) {
       setDisplayName('')
       return
@@ -57,26 +77,26 @@ const MyAccountPage: NextPage<Props> = ({ _session }: InferGetServerSidePropsTyp
   return (
     <>
       <Head>
-        <title>My Account - Eviratec Social Platform</title>
-        <meta name="description" content="Manage your user account on Eviratec Social Platform" />
+        <title>My Sites - Eviratec Social Platform</title>
+        <meta name="description" content="Manage your sites on Eviratec Social Platform" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="rgba(170, 68, 33)" />
-        <meta property="og:title" content="My Account - Eviratec Social Platform" />
-        <meta property="og:description" content="Manage your user account on Eviratec Social Platform" />
+        <meta property="og:title" content="My Sites - Eviratec Social Platform" />
+        <meta property="og:description" content="Manage your sites on Eviratec Social Platform" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.eviratecsocial.com/my/account" />
+        <meta property="og:url" content="https://www.eviratecsocial.com/my/sites" />
         <meta property="og:image" content="https://www.eviratecsocial.com/og.png" />
       </Head>
 
       <main className={styles.main}>
         <FeedPageHeading>
-          My Account
+          My Sites
         </FeedPageHeading>
 
         {displayName &&
           <div className={styles.intro}>
-            <p>Welcome back, {displayName}.</p>
+            <p>Welcome, {displayName}.</p>
           </div>
         ||
           <div className={styles.intro}>
@@ -84,63 +104,13 @@ const MyAccountPage: NextPage<Props> = ({ _session }: InferGetServerSidePropsTyp
           </div>
         }
 
-        <div className={styles.tools}>
-          <ul>
-            <li>
-              <Button
-                className={styles.accountBtn}
-                href={`/my/sites`}
-              >
-                My Sites
-              </Button>
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.tools}>
-          <h2>&#127759; Account Settings</h2>
-          <ul>
-            <li>
-              <Button
-                className={styles.accountBtn}
-                href={`/me`}
-              >
-                My Profile
-              </Button>
-            </li>
-            <li>
-              <Button
-                className={styles.accountBtn}
-                href={`/my/account/subscriptions`}
-              >
-                My Subscriptions
-              </Button>
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.tools}>
-          <h2>&#128274; Security Settings</h2>
-          <ul>
-            <li>
-              <Button
-                className={styles.accountBtn}
-                href={`/change-password`}
-              >
-                Change Password
-              </Button>
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.tools}>
-          <h2>&#9203; Session</h2>
-          <ul>
-            <li>
-              <LogoutButton className={styles.accountBtn} />
-            </li>
-          </ul>
-        </div>
+        {sites && sites.length && sites.map(site => {
+          return (
+            <div key={`site/${site.id}`}>
+              {site.fqdn}
+            </div>
+          )
+        })}
       </main>
 
       <Footer />
@@ -148,7 +118,7 @@ const MyAccountPage: NextPage<Props> = ({ _session }: InferGetServerSidePropsTyp
   )
 }
 
-export const getServerSideProps: GetServerSideProps<{ _session?: Session }> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{ _session?: Session, _sites?: Site[] }> = async (context) => {
   const token: string = context.req.cookies && context.req.cookies['eviratecseshid'] || ''
   if (!token) {
     return {
@@ -169,11 +139,14 @@ export const getServerSideProps: GetServerSideProps<{ _session?: Session }> = as
     }
   }
 
+  const _sites: Site[] = await fetchSitesByUser(_session.user)
+
   return {
     props: {
       _session,
+      _sites,
     },
   }
 }
 
-export default MyAccountPage
+export default MySitesPage

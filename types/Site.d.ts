@@ -12,4 +12,5 @@ export type Site = {
   plan: string
   fqdn: string
   subscription: string
+  created?: number
 }

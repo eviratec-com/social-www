@@ -3,8 +3,8 @@
   font-weight: 300;
 }
 
-.unverified {
-  color: grey;
+.new {
+  color: limegreen;
 }
 
 .emailVerified {

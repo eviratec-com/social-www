@@ -79,7 +79,7 @@ const UserProfilePage: NextPage<Props> = ({ profile, posts }: InferGetServerSide
           </p>
         }
 
-        {isLoggedIn && session && session.currentSession && profile.id  === session.currentSession.user &&
+        {isLoggedIn && session && session.currentSession && profile.id  === session.currentSession.user && false &&
           <div className={styles.verificationButtons}>
             {(['ID_VERIFIED', 'VERIFIED'].indexOf(profile.status) < 0) &&
               <Button className={styles.verifyButton} href={`/verify/email`}>
