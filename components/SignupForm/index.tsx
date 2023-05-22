@@ -137,7 +137,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
 
     const req = {
       method: 'POST',
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ username: username }),
       headers: { 'Content-Type': 'application/json' },
     }
 
@@ -148,7 +148,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
             setLoadingUsername(false)
             setLoading(false)
             setUsernameError(
-              `Unable to check subdomain availability: ${username}.eviratecsocial.online`
+              `Unable to check subdomain availability: ${username}.eviratecsocial.life`
             )
           })
         }
@@ -164,7 +164,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
         setLoadingUsername(false)
         setLoading(false)
         setUsernameError(
-          `Unable to check subdomain availability: ${username}.eviratecsocial.online`
+          `Unable to check subdomain availability: ${username}.eviratecsocial.life`
         )
       })
 
@@ -327,11 +327,6 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       return
     }
 
-    if (!username || !validUsername(username)) {
-      touch(usernameInputId)
-      return
-    }
-
     if (!password || !validPassword(password)) {
       touch(passwordInputId)
       return
@@ -339,6 +334,41 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
 
     if (!dob || !validDob(dob)) {
       touch(dobInputId)
+      return
+    }
+
+    if (!line1 || line1.length < 1) {
+      touch(line1InputId)
+      return
+    }
+
+    if (!city || city.length < 1) {
+      touch(cityInputId)
+      return
+    }
+
+    if (!state || state.length < 1) {
+      touch(stateInputId)
+      return
+    }
+
+    if (!country || country.length < 1) {
+      touch(countryInputId)
+      return
+    }
+
+    if (!username || !validUsername(username)) {
+      touch(usernameInputId)
+      return
+    }
+
+    if (!siteName || siteName.length < 1) {
+      touch(siteNameInputId)
+      return
+    }
+
+    if (!sitePlan || sitePlan.length < 1) {
+      touch(sitePlanSelectId)
       return
     }
 
@@ -526,7 +556,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 onBlur={e => touch(line1InputId)}
               />
 
-              {touched(line1InputId) && displayName.length < 1 &&
+              {touched(line1InputId) && line1.length < 2 &&
                 <p className={styles.fieldError}>
                   Please enter your billing address.
                 </p>
@@ -558,7 +588,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     onBlur={e => touch(cityInputId)}
                   />
 
-                  {touched(cityInputId) && displayName.length < 1 &&
+                  {touched(cityInputId) && city.length < 2 &&
                     <p className={styles.fieldError}>
                       Please enter your city.
                     </p>
@@ -576,7 +606,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     onBlur={e => touch(stateInputId)}
                   />
 
-                  {touched(stateInputId) && displayName.length < 1 &&
+                  {touched(stateInputId) && state.length < 2 &&
                     <p className={styles.fieldError}>
                       Please enter your state.
                     </p>
@@ -608,7 +638,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     })}
                   </select>
 
-                  {touched(countryInputId) && country.length < 1 &&
+                  {touched(countryInputId) && country.length < 2 &&
                     <p className={styles.fieldError}>
                       Please enter your country.
                     </p>
@@ -626,7 +656,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     onBlur={e => touch(zipInputId)}
                   />
 
-                  {touched(zipInputId) && displayName.length < 1 &&
+                  {touched(zipInputId) && zip.length < 2 &&
                     <p className={styles.fieldError}>
                       Please provide your ZIP or postal code.
                     </p>
@@ -708,7 +738,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
 
               {usernameChecked && usernameAvailable &&
                 <p className={styles.fieldSuccess}>
-                  {username}.eviratecsocial.online is available!
+                  {username}.eviratecsocial.life is available!
                 </p>
               }
 

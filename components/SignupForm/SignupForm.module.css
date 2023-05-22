@@ -131,7 +131,7 @@
 ._ .formWrapper form .tosAcceptWrapper p.fieldSuccess {
   font-size: 0.9rem;
   font-weight: 300;
-  color: lightgreen;
+  color: green;
 }
 
 ._ .formWrapper form .inputField p.fieldError,
@@ -261,6 +261,11 @@
 @media screen and (max-width: 700px) {
   ._ {
     width: 100%;
+  }
+
+  ._ .formWrapper form .inputField p.fieldSuccess,
+  ._ .formWrapper form .tosAcceptWrapper p.fieldSuccess {
+    color: lightgreen;
   }
 
   ._ .formWrapper form {

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from '@/styles/MyAccount.module.css'
+import styles from '@/styles/MySites.module.css'
 
 import fetchSitesByUser from '@/functions/sites/fetchByUser'
 import fetchSessionByToken from '@/functions/fetchSessionByToken'
@@ -98,17 +98,27 @@ const MySitesPage: NextPage<Props> = ({ _sites, _session }: InferGetServerSidePr
           <div className={styles.intro}>
             <p>Welcome, {displayName}.</p>
           </div>
-        ||
-          <div className={styles.intro}>
-            <ProgressBar />
-          </div>
         }
 
         {sites && sites.length && sites.map(site => {
+          const expected = new Date(site.created+((86400*2)*1000))
+
           return (
-            <div key={`site/${site.id}`}>
-              {site.fqdn}
-            </div>
+            <article className={styles.site} key={`site/${site.id}`}>
+              <header>
+                <div className={styles.siteName}>{site.name}</div>
+                <div className={styles.siteFqdn}>https://{site.fqdn}</div>
+              </header>
+
+              <section className={styles.body}>
+                <ProgressBar />
+
+                <div className={styles.siteStatus}>Provisioning...</div>
+                <div className={styles.expected}>
+                  Expected completion: {expected.toDateString()}
+                </div>
+              </section>
+            </article>
           )
         })}
       </main>
