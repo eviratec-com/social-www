@@ -138,7 +138,10 @@ export default function PostForm({ feed, defaultLink, onNewPost, onNewForm, uplo
 
     // Set auth token header
     const headers = {
+      'X-Token-Header': 'X-Eviratecnet-Token',
       'X-Eviratecnet-Token': session.currentSession.token,
+      'X-Callback-Url': process.env.NEXT_PUBLIC_UPLOAD_SVC_CALLBACK_URL,
+      'X-Esp-Site-Id': process.env.NEXT_PUBLIC_ESP_SITE_ID,
     }
 
     // Post the multipart/form-data (including the files)
