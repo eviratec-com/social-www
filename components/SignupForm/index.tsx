@@ -303,7 +303,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       // methods like iDEAL, your customer is redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
     }
-  }, [elements, joinResult])
+  }, [elements, joinResult, stripe])
 
   const handleSubmit = useCallback((event): void => {
     event.preventDefault()
@@ -410,7 +410,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     site, dob, acceptLegal, displayNameInputId, emailAddressInputId,
     usernameInputId, passwordInputId, dobInputId, tosAcceptInputId, validEmail,
     validUsername, validPassword, validDob, session, router, stripe, elements,
-    success, payError
+    success, payError, line1, line2, city, state, zip, country, processPayment
   ])
 
   const touched = useCallback((key: string): boolean => {

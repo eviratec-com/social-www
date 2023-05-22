@@ -42,6 +42,7 @@ export default async function handler(
 
     // Create the user account
     const u: User = await signup({
+      billing_address,
       email_address,
       display_name,
       username,
