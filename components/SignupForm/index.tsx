@@ -487,36 +487,6 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 </p>
               }
             </div>
-
-            <div className={styles.tosAcceptWrapper}>
-              <label>
-                <input
-                  type="checkbox"
-                  value="accept"
-                  onChange={e => setAcceptLegal('accept' == e.target.value)}
-                />
-
-                I have read and agree to the
-                <Link href={`/terms`} legacyBehavior>
-                  <a target="_blank">Terms of Use</a>
-                </Link>
-                and
-                <Link href={`/privacy`} legacyBehavior>
-                  <a target="_blank">Privacy Policy</a>
-                </Link>
-                for EviratecSocial.
-              </label>
-
-              {touched(tosAcceptInputId) && true !== acceptLegal &&
-                <p className={styles.fieldError}>
-                  Please accept the Terms of Use and Privacy Policy.
-                </p>
-              }
-            </div>
-
-            <div className={styles.submitButtonWrapper}>
-              <button type="submit" disabled={loading}>Save &amp; Continue</button>
-            </div>
           </section>
 
           <section className={styles.siteInfo}>
@@ -595,7 +565,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
 
               {usernameChecked && !usernameAvailable &&
                 <p className={styles.fieldError}>
-                  Domain {username}.eviratecsocial.online is not available.
+                  Domain {username}{domain} is not available.
                 </p>
               }
 
@@ -635,6 +605,36 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   },
                 },
               }} />
+            </div>
+            
+            <div className={styles.tosAcceptWrapper}>
+              <label>
+                <input
+                  type="checkbox"
+                  value="accept"
+                  onChange={e => setAcceptLegal('accept' == e.target.value)}
+                />
+
+                I have read and agree to the
+                <Link href={`/terms`} legacyBehavior>
+                  <a target="_blank">Terms of Use</a>
+                </Link>
+                and
+                <Link href={`/privacy`} legacyBehavior>
+                  <a target="_blank">Privacy Policy</a>
+                </Link>
+                for EviratecSocial.
+              </label>
+
+              {touched(tosAcceptInputId) && true !== acceptLegal &&
+                <p className={styles.fieldError}>
+                  Please accept the Terms of Use and Privacy Policy.
+                </p>
+              }
+            </div>
+
+            <div className={styles.submitButtonWrapper}>
+              <button type="submit" disabled={loading}>Save &amp; Continue</button>
             </div>
           </section>
         </form>
