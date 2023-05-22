@@ -266,6 +266,6 @@
   }
 
   ._ .formWrapper form section.accountInfo {
-    margin-right: none;
+    margin-right: 0;
   }
 }
