@@ -433,6 +433,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       <div className={styles.formWrapper}>
         <form name="login" onSubmit={handleSubmit}>
           <section className={styles.accountInfo}>
+            <h2>Account Details</h2>
+
             <div className={styles.inputField}>
               <label htmlFor={displayNameInputId}>Your Full Name</label>
               <input
@@ -510,6 +512,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 </p>
               }
             </div>
+
+            <h2>Billing Details</h2>
 
             <div className={styles.inputField}>
               <label htmlFor={line1InputId}>Billing Address Line 1</label>
@@ -633,6 +637,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
           </section>
 
           <section className={styles.siteInfo}>
+            <h2>Site Details</h2>
+
             <div className={styles.inputField}>
               <label htmlFor={siteNameInputId}>Site Name</label>
               <input
@@ -717,6 +723,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
               }
             </div>
 
+            <h2>Plan Selection</h2>
+
             <div className={styles.inputField}>
               <label htmlFor={sitePlanSelectId}>Select Plan</label>
               <select
@@ -738,6 +746,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 })}
               </select>
             </div>
+
+            <h2>Payment</h2>
 
             <div className={styles.inputField}>
               <PaymentElement options={{

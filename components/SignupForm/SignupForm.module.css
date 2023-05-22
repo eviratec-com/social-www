@@ -16,6 +16,13 @@
   flex-direction: row;
 }
 
+._ .formWrapper form h2 {
+  display: flex;
+  color: rgba(var(--link-alt-rgb), 0.2);
+  border-bottom: 2px solid;
+  margin-bottom: 1rem;
+}
+
 ._ .formWrapper form section.accountInfo,
 ._ .formWrapper form section.siteInfo {
   display: flex;
@@ -267,5 +274,9 @@
 
   ._ .formWrapper form section.accountInfo {
     margin-right: 0;
+  }
+
+  ._ .formWrapper form h2 {
+    display: flex;
   }
 }
