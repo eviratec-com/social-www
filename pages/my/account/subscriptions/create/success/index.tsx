@@ -81,36 +81,36 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     //   {customer: stripeCustomerId}
     // )
 
-    // const setupResult = await stripe.setupIntents.retrieve(
-    //   setupIntent
-    // )
-
-    const setupResult = await stripe.confirmCardSetup(
-      setupIntentClientSecret,
-      {
-        payment_method: {
-          customer: stripeCustomerId,
-        },
-      }
+    const setupResult = await stripe.setupIntents.retrieve(
+      setupIntent
     )
 
-    if (setupResult.error) {
-      return {
-        redirect: {
-          destination: '/my/account/subscriptions?error=',
-          permanent: false,
-        },
-      }
-    }
-
-    const paymentMethod = await stripe.paymentMethods.attach(
-      setupResult.payment_method,
-      {customer: stripeCustomerId}
-    );
+    // const setupResult = await stripe.confirmCardSetup(
+    //   setupIntentClientSecret,
+    //   {
+    //     payment_method: {
+    //       customer: stripeCustomerId,
+    //     },
+    //   }
+    // )
+    //
+    // if (setupResult.error) {
+    //   return {
+    //     redirect: {
+    //       destination: '/my/account/subscriptions?error=',
+    //       permanent: false,
+    //     },
+    //   }
+    // }
+    //
+    // const paymentMethod = await stripe.paymentMethods.attach(
+    //   setupResult.payment_method,
+    //   {customer: stripeCustomerId}
+    // );
 
     const subscription = await createSubscription(stripe)(
       stripeCustomerId,
-      paymentMethod.id,
+      setupResult.payment_method,
       nextPlanPriceId,
       _session.user,
       nextPlanForSite

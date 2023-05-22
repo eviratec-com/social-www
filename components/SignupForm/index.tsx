@@ -243,7 +243,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     return hasLowerCaseChar && hasUpperCaseChar && hasNumber && isGtMinLength
   }, [])
 
-  const processPayment = useCallback(async () => {
+  const processPayment = useCallback(async (_joinResult) => {
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit()
 
@@ -252,24 +252,28 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       return
     }
 
+    const customer: string = _joinResult && _joinResult.stripe
+      && _joinResult.stripe.customer || joinResult.stripe.customer
+
     // Create the SetupIntent and obtain clientSecret
     const res = await fetch(
       `/api/setupIntent`,
       {
         method: 'POST',
-        body: JSON.stringify({ customer: joinResult.stripe.customer }),
+        body: JSON.stringify({ customer: customer }),
         headers: {
           'Content-Type': 'application/json',
         },
       }
     )
 
-    const { client_secret: clientSecret } = await res.json()
+    const d = await res.json()
+    console.log(d)
 
     // Confirm the SetupIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmSetup({
       elements,
-      clientSecret,
+      clientSecret: d.clientSecret,
       confirmParams: {
         return_url: process.env.NEXT_PUBLIC_STRIPE_RETURN_URL,
       },
@@ -365,12 +369,12 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
           })
         }
 
-        result.json().then(json => {
+        result.json().then(async (json) => {
+          await setJoinResult(json)
           setLoading(false)
           setSuccess(true)
-          setJoinResult(json)
           session.login(json.session)
-          processPayment()
+          processPayment(json)
         })
       })
       .catch((err) => {
