@@ -19,6 +19,7 @@ export default async function handler(
 ) {
   try {
     const {
+      billing_address,
       email_address,
       display_name,
       username,
@@ -71,12 +72,12 @@ export default async function handler(
       user: u.id,
       name: display_name,
     }, {
-      line1: '21 CASTOR STREET',
-      line2: '',
-      city: 'CLIFTON BEACH',
-      zip: '4879',
-      state: 'QLD',
-      country: 'AU'
+      line1: billing_address.line1,
+      line2: billing_address.line2,
+      city: billing_address.city,
+      zip: billing_address.zip,
+      state: billing_address.state,
+      country: billing_address.country,
     })
 
     await setUserMetaValue(u.id, 'stripe_customer_id', _stripeCust.id)

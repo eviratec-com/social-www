@@ -47,11 +47,11 @@ export default async function signup(d: UserRegistration): Promise<User> {
 
     const validDob: boolean = !!d.dob.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)
     const input = [
-      d.username,
+      d.site,
       hash,
       d.email_address,
       d.display_name,
-      `/u/${d.username}`,
+      `/u/${d.site}`,
       validDob && d.dob || '2123-04-20',
     ]
 

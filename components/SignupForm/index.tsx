@@ -12,6 +12,7 @@ import {
   useElements,
   PaymentElement
 } from '@stripe/react-stripe-js'
+import allCountries from 'country-region-data/data.json'
 
 import ProgressBar from '@/components/ProgressBar'
 
@@ -60,6 +61,13 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const passwordInputId: string = useId()
   const dobInputId: string = useId()
 
+  const line1InputId: string = useId()
+  const line2InputId: string = useId()
+  const cityInputId: string = useId()
+  const stateInputId: string = useId()
+  const zipInputId: string = useId()
+  const countryInputId: string = useId()
+
   const siteNameInputId: string = useId()
   const sitePlanSelectId: string = useId()
 
@@ -68,6 +76,13 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [dob, setDob] = useState<string>('')
+
+  const [line1, setLine1] = useState<string>('')
+  const [line2, setLine2] = useState<string>('')
+  const [city, setCity] = useState<string>('')
+  const [state, setState] = useState<string>('')
+  const [zip, setZip] = useState<string>('')
+  const [country, setCountry] = useState<string>('AU')
 
   const [site, setSite] = useState<string>('')
   const [domain, setDomain] = useState<string>('.eviratecsocial.life')
@@ -345,6 +360,14 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     const u: UserRegistration = {
       email_address: emailAddress,
       display_name: displayName,
+      billing_address: {
+        line1,
+        line2,
+        city,
+        state,
+        zip,
+        country,
+      },
       username,
       password,
       site_name: siteName,
@@ -447,7 +470,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
             </div>
 
             <div className={styles.inputField}>
-              <label htmlFor={passwordInputId}>Password</label>
+              <label htmlFor={passwordInputId}>Choose Password</label>
               <input
                 id={passwordInputId}
                 value={password}
@@ -486,6 +509,126 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   You must be at least 18 years old to join.
                 </p>
               }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={line1InputId}>Billing Address Line 1</label>
+              <input
+                id={line1InputId}
+                value={line1}
+                name="line1"
+                placeholder=""
+                onChange={e => setLine1(e.target.value)}
+                onBlur={e => touch(line1InputId)}
+              />
+
+              {touched(line1InputId) && displayName.length < 1 &&
+                <p className={styles.fieldError}>
+                  Please enter your billing address.
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={line2InputId}>Billing Address Line 2</label>
+              <input
+                id={line2InputId}
+                value={line2}
+                name="line2"
+                placeholder=""
+                onChange={e => setLine2(e.target.value)}
+                onBlur={e => touch(line2InputId)}
+              />
+            </div>
+
+            <div className={styles.inputField}>
+              <div className={styles.geoAreaInput}>
+                <div className={styles.geoCityInput}>
+                  <label htmlFor={cityInputId}>City</label>
+                  <input
+                    id={cityInputId}
+                    value={city}
+                    name="city"
+                    placeholder=""
+                    onChange={e => setCity(e.target.value)}
+                    onBlur={e => touch(cityInputId)}
+                  />
+
+                  {touched(cityInputId) && displayName.length < 1 &&
+                    <p className={styles.fieldError}>
+                      Please enter your city.
+                    </p>
+                  }
+                </div>
+
+                <div className={styles.geoStateInput}>
+                  <label htmlFor={stateInputId}>State</label>
+                  <input
+                    id={stateInputId}
+                    value={state}
+                    name="state"
+                    placeholder=""
+                    onChange={e => setState(e.target.value)}
+                    onBlur={e => touch(stateInputId)}
+                  />
+
+                  {touched(stateInputId) && displayName.length < 1 &&
+                    <p className={styles.fieldError}>
+                      Please enter your state.
+                    </p>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.inputField}>
+              <div className={styles.geoAreaInput}>
+                <div className={styles.geoCountryInput}>
+                  <label htmlFor={countryInputId}>Country</label>
+                  <select
+                    id={countryInputId}
+                    value={country}
+                    name="country"
+                    onChange={e => setCountry(e.target.value)}
+                    onBlur={e => touch(countryInputId)}
+                  >
+                    {allCountries.length && allCountries.map(country => {
+                      return (
+                        <option
+                          value={country.countryShortCode}
+                          key={`country/${country.countryShortCode}`}
+                        >
+                          {country.countryName}
+                        </option>
+                      )
+                    })}
+                  </select>
+
+                  {touched(countryInputId) && country.length < 1 &&
+                    <p className={styles.fieldError}>
+                      Please enter your country.
+                    </p>
+                  }
+                </div>
+
+                <div className={styles.geoZipInput}>
+                  <label htmlFor={zipInputId}>ZIP / Post Code</label>
+                  <input
+                    id={zipInputId}
+                    value={zip}
+                    name="zip"
+                    placeholder=""
+                    onChange={e => setZip(e.target.value)}
+                    onBlur={e => touch(zipInputId)}
+                  />
+
+                  {touched(zipInputId) && displayName.length < 1 &&
+                    <p className={styles.fieldError}>
+                      Please provide your ZIP or postal code.
+                    </p>
+                  }
+                </div>
+              </div>
             </div>
           </section>
 
@@ -602,11 +745,19 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   billingDetails: {
                     name: displayName,
                     email: emailAddress,
+                    address: {
+                      line1: line1,
+                      line2: line2,
+                      city: city,
+                      state: state,
+                      country: country,
+                      postal_code: zip,
+                    },
                   },
                 },
               }} />
             </div>
-            
+
             <div className={styles.tosAcceptWrapper}>
               <label>
                 <input
@@ -634,7 +785,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
             </div>
 
             <div className={styles.submitButtonWrapper}>
-              <button type="submit" disabled={loading}>Save &amp; Continue</button>
+              <button type="submit" disabled={loading}>Complete Signup</button>
             </div>
           </section>
         </form>
@@ -649,7 +800,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       {success && (
         <div className={styles.loginResult}>
           <ProgressBar />
-          <p className={styles.loginSuccess}>Login success! Redirecting...</p>
+          <p className={styles.loginSuccess}>Signup success! Redirecting...</p>
         </div>
       )}
 

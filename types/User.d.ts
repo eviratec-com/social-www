@@ -33,6 +33,14 @@ export type UserActivity = {
 export type UserRegistration = {
   email_address: string
   display_name: string
+  billing_address: {
+    line1: string
+    line2: string
+    city: string
+    state: string
+    zip: string
+    country: string
+  }
   username: string
   password: string
   site_name: string

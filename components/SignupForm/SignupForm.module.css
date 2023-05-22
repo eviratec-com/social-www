@@ -20,6 +20,8 @@
 ._ .formWrapper form section.siteInfo {
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
   width: 385px;
 }
 
@@ -180,6 +182,41 @@
   font-size: 1rem;
   font-weight: 200;
   line-height: 2.4rem;
+}
+
+.formWrapper form div.inputField div.geoAreaInput {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.formWrapper form div.inputField div.geoAreaInput p {
+  white-space: wrap;
+}
+
+.formWrapper form div.inputField div.geoAreaInput div.geoCityInput {
+  display: flex;
+  flex-direction: column;
+  width: 49%;
+}
+
+.formWrapper form div.inputField div.geoAreaInput div.geoStateInput {
+  display: flex;
+  flex-direction: column;
+  width: 49%;
+}
+
+.formWrapper form div.inputField div.geoAreaInput div.geoCountryInput {
+  display: flex;
+  flex-direction: column;
+  width: 58%;
+}
+
+.formWrapper form div.inputField div.geoAreaInput div.geoZipInput {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
 }
 
 ._ .loginResult {
