@@ -158,7 +158,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               <div className={styles.imgWrapper}>
                 <Image
                   src={`https://eviratecphotos.blob.core.windows.net/assets/marketing/promotional/ESP_20230517/eviratec-net-desktop-hero.png`}
-                  alt={`A screenshot of the homepage from Eviratec Social Platform (www.eviratecsocial.com). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
+                  alt={`A screenshot of the homepage from Eviratec Network (www.eviratec.net). Showing 50 link categories, with item counts. Homepage title reads Eviratec Net, Web Directory.`}
                   style={{
                     objectFit: 'contain',
                   }}
@@ -168,7 +168,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
               </div>
 
               <figcaption>
-                Eviratec Social Platform link directory homepage (www.eviratecsocial.com)
+                Eviratec Network link directory homepage (www.eviratec.net)
               </figcaption>
             </figure>
           </section>
