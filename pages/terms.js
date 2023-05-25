@@ -26,7 +26,7 @@ export default function TermsOfUsePage() {
         <p>Last updated: April 20, 2023</p>
 
         <section className={styles.legal}>
-           <p>Please read these Terms of Use (&quot;Terms&quot;, &quot;Terms of Use&quot;) carefully before using the <Link href="https://www.eviratecsocial.com">https://www.eviratecsocial.com</Link> website (the &quot;Service&quot;) operated by CALLAN PETER MILNE (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;).</p>
+           <p>Please read these Terms of Use (&quot;Terms&quot;, &quot;Terms of Use&quot;) carefully before using the <Link href="https://www.eviratecsocial.com">https://www.eviratecsocial.com</Link> website (the &quot;Service&quot;) operated by EVIRATEC (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;).</p>
 
            <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service. You warrant that you are at least 18-years-old and you are legally capable of entering into binding contracts. If you are under 18-years-old, you warrant that you have obtained consent from your parent or guardian and they agree to be bound by these Terms on your behalf.</p>
 
@@ -67,9 +67,9 @@ export default function TermsOfUsePage() {
 
            <h2>Links To Other Web Sites</h2>
 
-           <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by CALLAN PETER MILNE.</p>
+           <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by EVIRATEC.</p>
 
-           <p>CALLAN PETER MILNE has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that CALLAN PETER MILNE shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
+           <p>EVIRATEC has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that EVIRATEC shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
 
            <p>We only provide links to external websites as a convenience, and the inclusion of such a link to external websites do not imply our endorsement of those websites. You acknowledge and agree that when you access other websites on the Internet, you do so at your own risk.</p>
 
@@ -112,7 +112,7 @@ export default function TermsOfUsePage() {
 
            <p>Your use of the Service is at your sole risk. The Service is provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance.</p>
 
-           <p>CALLAN PETER MILNE its subsidiaries, affiliates, and its licensors do not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements.</p>
+           <p>EVIRATEC its subsidiaries, affiliates, and its licensors do not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements.</p>
 
            <p>This disclaimer of liability applies to any damages or injury caused by any failure of performance, error, omission, interruption, deletion, defect, delay in operation or transmission, computer virus, communication line failure, theft, or destruction or unauthorized access or, alteration of or use of record in connection with the use or operation of the Service, whether for breach of contract, tortious behaviour, negligence or any other cause of action.</p>
 

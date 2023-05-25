@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
         <p>Last updated: April 20, 2023</p>
 
         <section className={styles.legal}>
-          <p>CALLAN PETER MILNE (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates the <Link href="https://www.eviratecsocial.com">https://www.eviratecsocial.com</Link> website (the &quot;Service&quot;).</p>
+          <p>EVIRATEC (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates the <Link href="https://www.eviratecsocial.com">https://www.eviratecsocial.com</Link> website (the &quot;Service&quot;).</p>
 
           <p>This page informs you of our policies regarding the collection, use and disclosure of Personal Information when you use our Service.</p>
 
