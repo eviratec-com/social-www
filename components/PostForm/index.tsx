@@ -318,8 +318,6 @@ export default function PostForm({ feed, defaultLink, onNewPost, onNewForm, uplo
                 placeholder="<Content> e.g. This is our parent brand website."
                 onFocus={fetchLinkInfo}
               />
-
-              <LinkManager links={links} onNewForm={onNewForm} />
             </div>
 
             <button type="submit" disabled={true === submitting}>

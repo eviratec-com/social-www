@@ -15,16 +15,16 @@ export default function SocialProfiles() {
       link: 'https://linkedin.com',
       name: 'LinkedIn',
     },
-    link: 'https://linkedin.com/company/eviratec',
-    user: 'Eviratec'
+    link: 'https://www.linkedin.com/showcase/eviratec-social-platform/',
+    user: 'Eviratec Social Platform'
   }, {
     service: {
       icon: 'facebook',
       link: 'https://www.facebook.com',
       name: 'Facebook',
     },
-    link: 'https://www.facebook.com/eviratec',
-    user: 'Eviratec'
+    link: 'https://www.facebook.com/eviratecsocial',
+    user: 'Eviratec Social'
   }, {
     service: {
       icon: 'twitter',

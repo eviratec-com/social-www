@@ -48,16 +48,7 @@ const FeedsPage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeo
         </FeedPageHeading>
 
         <div className={styles.feeds}>
-          <div className={styles.feed}>
-            <Link prefetch={false} href={`/announcements`}>Announcements</Link>
-          </div>
-
           {allFeeds.map((feed: Feed, i: number) => {
-            if ('announcements' === feed.slug) {
-              return // We're already showing the announcements feed
-            }
-
-
             // if (feed.slug.match(/\//g)) {
             //   return // Only show top-level feeds
             // }

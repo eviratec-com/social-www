@@ -37,13 +37,13 @@ const RecentPostsPage: NextPage<Props> = ({ posts }: InferGetServerSidePropsType
   return (
     <>
       <Head>
-        <title>Recent Links - Eviratec Social Platform</title>
-        <meta name="description" content="Recent links on Eviratec Social Platform" />
+        <title>Recent Posts - Eviratec Social Platform</title>
+        <meta name="description" content="Recent posts on Eviratec Social Platform" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="rgba(170, 68, 33)" />
         <meta property="og:title" content="Eviratec Social Platform Recent Links" />
-        <meta property="og:description" content="Recent links on Eviratec Social Platform" />
+        <meta property="og:description" content="Recent posts on Eviratec Social Platform" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.eviratecsocial.com/recent" />
         <meta property="og:image" content="https://www.eviratecsocial.com/og.png" />
@@ -51,7 +51,7 @@ const RecentPostsPage: NextPage<Props> = ({ posts }: InferGetServerSidePropsType
 
       <main className={styles.main}>
         <FeedPageHeading>
-          Recent Links
+          Recent Posts
         </FeedPageHeading>
 
         <div className={styles.posts}>
