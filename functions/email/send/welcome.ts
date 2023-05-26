@@ -65,6 +65,11 @@ Eviratec Social\n\
 Site Setup Team\
 "
 
+interface EmailAddress {
+  address: string
+  displayName: string
+}
+
 // Send Welcome Email (async) function
 export default async function sendWelcomeEmail (
   recipient: EmailAddress,
