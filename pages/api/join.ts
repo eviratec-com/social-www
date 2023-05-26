@@ -4,6 +4,7 @@ import signup from '@/functions/signup'
 import setCookie from '@/functions/setCookie'
 import createSession from '@/functions/createSession'
 import checkUsername from '@/functions/users/checkUsername'
+import sendWelcomeEmail from '@/functions/email/send/welcome'
 import createCustomer from '@/functions/payments/stripe/createCustomer'
 import createSite from '@/functions/sites/createSite'
 import claimSiteById from '@/functions/users/claimSiteById'
@@ -102,6 +103,16 @@ export default async function handler(
         customer: _stripeCust.id,
       },
     })
+
+    // Send welcome email
+    sendWelcomeEmail(
+      {
+        displayName: display_name,
+        address: email_address
+      },
+      display_name,
+      site
+    )
   }
   catch (err) {
     res.status(400).json({
