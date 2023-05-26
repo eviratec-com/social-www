@@ -13,7 +13,7 @@ export default async function fetchPostsByFeedSlug(slug: string): Promise<Post[]
       + `JOIN "posts" ON "posts"."id" = "feed_posts"."post"`
       + `JOIN "users" ON "users"."id" = "posts"."author" `
       + `WHERE "slug" = $1::text AND "posts"."deleted" IS NULL `
-      + `ORDER BY "posts"."content" ASC `
+      + `ORDER BY "feed_posts"."published" DESC `
       + `LIMIT 200 `
 
     client.query(query, [slug], (err, res) => {
