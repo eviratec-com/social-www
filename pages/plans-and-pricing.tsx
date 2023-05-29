@@ -206,7 +206,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <li>100GB Storage</li>
                   <li>1TB Transfer (outbound) per month</li>
                   <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
-                  <li>Daily backups</li>
                   <li>Fully-managed hosting</li>
                   <li>Free Technical Support</li>
                   <li>Fault-tolerant infrastructure</li>

@@ -226,7 +226,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <li>1TB Transfer (outbound) per month</li>
                   <li>Fully-managed hosting</li>
                   <li>Fault-tolerant infrastructure</li>
-                  <li>Daily backups</li>
                   <li>Set-up in 2 business days<br /><span>(or 20% discount for 12-months)</span></li>
                   <li>Free Technical Support</li>
                 </ul>
