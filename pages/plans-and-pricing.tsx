@@ -84,6 +84,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <ul>
                     <li>5 Categories</li>
                     <li>5 User Accounts</li>
+                    <li>Email Support</li>
                   </ul>
 
                   <div className={styles.spacer}></div>
@@ -107,6 +108,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <ul>
                     <li>10 Categories</li>
                     <li>25 User Accounts</li>
+                    <li>Phone & Email Support</li>
                   </ul>
 
                   <div className={styles.spacer}></div>
@@ -130,6 +132,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <ul>
                     <li>50 Categories</li>
                     <li>125 User Accounts</li>
+                    <li>Phone & Email Support</li>
                   </ul>
 
                   <div className={styles.spacer}></div>
