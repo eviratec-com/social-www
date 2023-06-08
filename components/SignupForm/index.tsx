@@ -168,7 +168,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
         )
       })
 
-  }, [username])
+  }, [username, validUsername])
 
   const touch = useCallback((key: string): boolean => {
     if (touchedFields.indexOf(key) > -1) {
@@ -283,7 +283,6 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     )
 
     const d = await res.json()
-    console.log(d)
 
     // Confirm the SetupIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmSetup({
@@ -439,8 +438,10 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     touch, emailAddress, displayName, username, password, siteName, sitePlan,
     site, dob, acceptLegal, displayNameInputId, emailAddressInputId,
     usernameInputId, passwordInputId, dobInputId, tosAcceptInputId, validEmail,
-    validUsername, validPassword, validDob, session, router, stripe, elements,
-    success, payError, line1, line2, city, state, zip, country, processPayment
+    validUsername, validPassword, validDob, session, stripe, elements,
+    success, payError, line1, line2, city, state, zip, country, processPayment,
+    loading, line1InputId, cityInputId, stateInputId, countryInputId,
+    siteNameInputId, sitePlanSelectId
   ])
 
   const touched = useCallback((key: string): boolean => {
@@ -456,7 +457,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     onChangeAmount && onChangeAmount(plans.filter(plan => {
       return plan.externalId.stripe === sitePlan
     })[0].ppm*100)
-  }, [sitePlan, plans])
+  }, [sitePlan, plans, onChangePlan, onChangeAmount])
 
   return (
     <div className={styles._}>
