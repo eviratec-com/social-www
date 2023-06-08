@@ -102,6 +102,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const [error, setError] = useState<string>('')
 
   const [joinResult, setJoinResult] = useState<JoinResult|null>(null)
+  const [generalDisabled, setGeneralDisabled] = useState<boolean>(false)
 
   useEffect(() => {
     setSite(`${username}${domain}`)
@@ -264,6 +265,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
 
     if (submitError) {
       setError(submitError.message)
+      setSuccess(false)
+      setLoading(false)
       return
     }
 
@@ -386,6 +389,13 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     setError('')
     setLoading(true)
 
+    // If they've already completed the signup, but are correcting a payment
+    // error
+    if (null !== joinResult) {
+      processPayment(joinResult)
+      return
+    }
+
     const u: UserRegistration = {
       email_address: emailAddress,
       display_name: displayName,
@@ -441,7 +451,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     validUsername, validPassword, validDob, session, stripe, elements,
     success, payError, line1, line2, city, state, zip, country, processPayment,
     loading, line1InputId, cityInputId, stateInputId, countryInputId,
-    siteNameInputId, sitePlanSelectId
+    siteNameInputId, sitePlanSelectId, joinResult
   ])
 
   const touched = useCallback((key: string): boolean => {
@@ -459,6 +469,15 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     })[0].ppm*100)
   }, [sitePlan, plans, onChangePlan, onChangeAmount])
 
+  useEffect(() => {
+    if (null === joinResult) {
+      setGeneralDisabled(false)
+      return
+    }
+
+    setGeneralDisabled(true)
+  }, [joinResult])
+
   return (
     <div className={styles._}>
       <div className={styles.formWrapper}>
@@ -475,6 +494,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 placeholder="e.g. John Smith"
                 onChange={e => setDisplayName(e.target.value)}
                 onBlur={e => touch(displayNameInputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(displayNameInputId) && displayName.length < 1 &&
@@ -493,6 +513,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 type="email"
                 onChange={e => setEmailAddress(e.target.value)}
                 onBlur={e => touch(emailAddressInputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(emailAddressInputId) && !validEmail(emailAddress) &&
@@ -511,6 +532,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 type="password"
                 onChange={e => setPassword(e.target.value)}
                 onBlur={e => touch(passwordInputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(passwordInputId) && !validPassword(password) &&
@@ -535,6 +557,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 type="date"
                 onChange={e => setDob(e.target.value)}
                 onBlur={e => touch(dobInputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(dobInputId) && !validDob(dob) &&
@@ -555,6 +578,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 placeholder=""
                 onChange={e => setLine1(e.target.value)}
                 onBlur={e => touch(line1InputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(line1InputId) && line1.length < 2 &&
@@ -573,6 +597,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 placeholder=""
                 onChange={e => setLine2(e.target.value)}
                 onBlur={e => touch(line2InputId)}
+                disabled={true === generalDisabled}
               />
             </div>
 
@@ -587,6 +612,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     placeholder=""
                     onChange={e => setCity(e.target.value)}
                     onBlur={e => touch(cityInputId)}
+                    disabled={true === generalDisabled}
                   />
 
                   {touched(cityInputId) && city.length < 2 &&
@@ -605,6 +631,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     placeholder=""
                     onChange={e => setState(e.target.value)}
                     onBlur={e => touch(stateInputId)}
+                    disabled={true === generalDisabled}
                   />
 
                   {touched(stateInputId) && state.length < 2 &&
@@ -626,6 +653,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     name="country"
                     onChange={e => setCountry(e.target.value)}
                     onBlur={e => touch(countryInputId)}
+                    disabled={true === generalDisabled}
                   >
                     {allCountries.length && allCountries.map(country => {
                       return (
@@ -655,6 +683,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     placeholder=""
                     onChange={e => setZip(e.target.value)}
                     onBlur={e => touch(zipInputId)}
+                    disabled={true === generalDisabled}
                   />
 
                   {touched(zipInputId) && zip.length < 2 &&
@@ -679,6 +708,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 placeholder="e.g. John's Book Club"
                 onChange={e => setSiteName(e.target.value)}
                 onBlur={e => touch(siteNameInputId)}
+                disabled={true === generalDisabled}
               />
 
               {touched(siteNameInputId) && siteName.length < 1 &&
@@ -702,6 +732,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                     onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
                     onFocus={e => setUsernameChecked(false)}
                     onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
+                    disabled={true === generalDisabled}
                   />
                 </div>
 
@@ -709,6 +740,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   <select
                     value={domain}
                     onChange={e => setDomain(e.target.value)}
+                    disabled={true === generalDisabled}
                   >
                     <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
                   </select>
@@ -764,6 +796,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 name="sitePlan"
                 onChange={e => setSitePlan(e.target.value)}
                 onBlur={e => touch(sitePlanSelectId)}
+                disabled={true === generalDisabled}
               >
                 {plans.length && plans.map((plan: Plan) => {
                   return (
