@@ -12,7 +12,7 @@
     "@azure/communication-email": "1.0.0",
     "@next/font": "13.1.6",
     "@stripe/react-stripe-js": "2.1.0",
-    "@stripe/stripe-js": "1.53.0",
+    "@stripe/stripe-js": "1.54.0",
     "bcrypt": "5.1.0",
     "cookie": "0.5.0",
     "country-region-data": "2.7.0",
