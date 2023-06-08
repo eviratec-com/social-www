@@ -63,6 +63,7 @@ const ConversationsPage: NextPage<Props> = ({ _session }: InferGetServerSideProp
     })
   }, [session])
 
+  // Log user in if the server-side has found a session cookie
   useEffect(() => {
     (async () => {
       if (session.currentSession) {
@@ -73,13 +74,18 @@ const ConversationsPage: NextPage<Props> = ({ _session }: InferGetServerSideProp
         return
       }
 
+      if (session.loggedIn) {
+        return
+      }
+
       session.login(_session)
     })()
-  }, [])
+  })
 
+  // Load conversations for an authorised user
   useEffect(() => {
     (async () => {
-      if (!session || !session.currentSession || !session.currentSession.token)
+      if (!session || !session.loggedIn || !session.currentSession || !session.currentSession.token)
         return router.push('/')
 
       if (true === loading) {
@@ -97,7 +103,7 @@ const ConversationsPage: NextPage<Props> = ({ _session }: InferGetServerSideProp
       setAllConversations([...conversations])
       setLoading(false)
     })()
-  }, [])
+  })
 
   return (
     <>

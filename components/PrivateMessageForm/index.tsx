@@ -307,11 +307,17 @@ export default function PrivateMessageForm({uploadUrl, conversation, onNewMessag
                 <div className={styles.notice}><p>Uploading...</p></div>
                 <div className={styles.fileList}>
                   {files.map((file: File, i: number): ReactNode => {
+                    /* eslint-disable @next/next/no-img-element */
                     return (
                       <div className={styles.fileListItem} key={i}>
-                        <img src={URL.createObjectURL(file)} height="100" alt="User upload" />
+                        <img
+                          src={URL.createObjectURL(file)}
+                          height="100"
+                          alt="User upload"
+                        />
                       </div>
                     )
+                    /* eslint-enable @next/next/no-img-element */
                   })}
                 </div>
               </>
