@@ -55,7 +55,7 @@ const JoinPage: NextPage = () => {
       mode: 'subscription',
       currency: 'aud',
     })
-  }, [])
+  }, [setOptions])
 
   return (
     <>

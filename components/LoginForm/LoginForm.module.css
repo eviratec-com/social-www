@@ -34,17 +34,17 @@
 
 ._ .formWrapper form .inputField label {
   /* color: rgba(102, 0, 204, 1); */
-  color: deepskyblue;
+  color: var(--input-label-color);
 }
 
 ._ .formWrapper form .inputField input {
-  border: 2px solid rgba(var(--input-border-rgb), 1);
-  background-color: rgba(var(--input-border-rgb), 0.05);
+  border: var(--input-border-width) solid rgba(var(--input-border-rgba));
+  background-color: rgba(var(--input-background-rgba));
   line-height: 2rem;
   padding: 0 1rem;
-  border-radius: 3px;
-  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
-  text-align: center;
+  border-radius: 5px;
+  box-shadow: var(--input-box-shadow);
+  text-align: left;
   font-weight: 300;
 }
 
@@ -95,16 +95,6 @@
 
 ._ .loginResult p.loginError {
 
-}
-
-@media (prefers-color-scheme: dark) {
-  ._ {
-
-  }
-
-  ._ .formWrapper form .inputField label {
-    color: lightskyblue;
-  }
 }
 
 /* Mobile */

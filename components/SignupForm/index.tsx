@@ -453,7 +453,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     validUsername, validPassword, validDob, session, stripe, elements,
     success, payError, line1, line2, city, state, zip, country, processPayment,
     loading, line1InputId, cityInputId, stateInputId, countryInputId,
-    siteNameInputId, sitePlanSelectId, joinResult
+    siteNameInputId, sitePlanSelectId, joinResult, askForDob
   ])
 
   const touched = useCallback((key: string): boolean => {
@@ -469,7 +469,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
     onChangeAmount && onChangeAmount(plans.filter(plan => {
       return plan.externalId.stripe === sitePlan
     })[0].ppm*100)
-  }, [sitePlan, plans, onChangePlan, onChangeAmount])
+  }, [sitePlan, plans])
 
   useEffect(() => {
     if (null === joinResult) {
@@ -485,7 +485,121 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       <div className={styles.formWrapper}>
         <form name="login" onSubmit={handleSubmit}>
           <section className={styles.accountInfo}>
-            <h2>Account Details</h2>
+            <h2>Site Details</h2>
+
+            <div className={styles.inputField}>
+              <label htmlFor={siteNameInputId}>Site Name</label>
+              <input
+                id={siteNameInputId}
+                value={siteName}
+                name="siteName"
+                placeholder="e.g. John's Book Club"
+                onChange={e => setSiteName(e.target.value)}
+                onBlur={e => touch(siteNameInputId)}
+                disabled={true === generalDisabled}
+              />
+
+              {touched(siteNameInputId) && siteName.length < 1 &&
+                <p className={styles.fieldError}>
+                  Please choose a site name.
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
+              <div className={styles.urlPicker}>
+                <span className={styles.urlPickerProtocol}>https://</span>
+                <div className={styles.urlPickerInput}>
+                  <input
+                    id={usernameInputId}
+                    value={username}
+                    name="username"
+                    placeholder="yourname"
+                    className={styles.usernameInput}
+                    onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
+                    onFocus={e => setUsernameChecked(false)}
+                    onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
+                    disabled={true === generalDisabled}
+                  />
+                </div>
+
+                <div className={styles.urlPickerDomain}>
+                  <select
+                    value={domain}
+                    onChange={e => setDomain(e.target.value)}
+                    disabled={true === generalDisabled}
+                  >
+                    <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
+                  </select>
+                </div>
+              </div>
+
+              {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain.
+                  <br />Sub-domain names must be at least 3 characters.
+                </p>
+              }
+
+              {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain. Sub-domain names may only contain:
+                  <ul>
+                    <li>English alphabet (A-Z)</li>
+                    <li>Numbers (0-9)</li>
+                    <li>Hyphens (-)</li>
+                  </ul>
+                </p>
+              }
+
+              {loadingUsername &&
+                <p className={styles.fieldSuccess}>Checking availability...</p>
+              }
+
+              {usernameChecked && usernameAvailable &&
+                <p className={styles.fieldSuccess}>
+                  {username}.eviratecsocial.life is available!
+                </p>
+              }
+
+              {usernameChecked && !usernameAvailable &&
+                <p className={styles.fieldError}>
+                  Domain {username}{domain} is not available.
+                </p>
+              }
+
+              {usernameError &&
+                <p className={styles.fieldError}>{usernameError}</p>
+              }
+            </div>
+
+            <h2>Plan Selection</h2>
+
+            <div className={styles.inputField}>
+              <label htmlFor={sitePlanSelectId}>Select Plan</label>
+              <select
+                id={sitePlanSelectId}
+                value={sitePlan}
+                name="sitePlan"
+                onChange={e => setSitePlan(e.target.value)}
+                onBlur={e => touch(sitePlanSelectId)}
+                disabled={true === generalDisabled}
+              >
+                {plans.length && plans.map((plan: Plan) => {
+                  return (
+                    <option
+                      value={plan.externalId.stripe}
+                      key={`opt/${plan.externalId.stripe}`}
+                    >
+                      {plan.title} Plan: {plan.features.join(', ')}: ${plan.ppm} /month
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <h2>New Account Details</h2>
 
             <div className={styles.inputField}>
               <label htmlFor={displayNameInputId}>Your Full Name</label>
@@ -570,7 +684,9 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 }
               </div>
             }
+          </section>
 
+          <section className={styles.siteInfo}>
             <h2>Billing Details</h2>
 
             <div className={styles.inputField}>
@@ -697,122 +813,6 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   }
                 </div>
               </div>
-            </div>
-          </section>
-
-          <section className={styles.siteInfo}>
-            <h2>Site Details</h2>
-
-            <div className={styles.inputField}>
-              <label htmlFor={siteNameInputId}>Site Name</label>
-              <input
-                id={siteNameInputId}
-                value={siteName}
-                name="siteName"
-                placeholder="e.g. John's Book Club"
-                onChange={e => setSiteName(e.target.value)}
-                onBlur={e => touch(siteNameInputId)}
-                disabled={true === generalDisabled}
-              />
-
-              {touched(siteNameInputId) && siteName.length < 1 &&
-                <p className={styles.fieldError}>
-                  Please choose a site name.
-                </p>
-              }
-            </div>
-
-            <div className={styles.inputField}>
-              <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
-              <div className={styles.urlPicker}>
-                <span className={styles.urlPickerProtocol}>https://</span>
-                <div className={styles.urlPickerInput}>
-                  <input
-                    id={usernameInputId}
-                    value={username}
-                    name="username"
-                    placeholder="yourname"
-                    className={styles.usernameInput}
-                    onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
-                    onFocus={e => setUsernameChecked(false)}
-                    onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
-                    disabled={true === generalDisabled}
-                  />
-                </div>
-
-                <div className={styles.urlPickerDomain}>
-                  <select
-                    value={domain}
-                    onChange={e => setDomain(e.target.value)}
-                    disabled={true === generalDisabled}
-                  >
-                    <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
-                  </select>
-                </div>
-              </div>
-
-              {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
-                <p className={styles.fieldError}>
-                  Please enter a valid sub-domain.
-                  <br />Sub-domain names must be at least 3 characters.
-                </p>
-              }
-
-              {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
-                <p className={styles.fieldError}>
-                  Please enter a valid sub-domain. Sub-domain names may only contain:
-                  <ul>
-                    <li>English alphabet (A-Z)</li>
-                    <li>Numbers (0-9)</li>
-                    <li>Hyphens (-)</li>
-                  </ul>
-                </p>
-              }
-
-              {loadingUsername &&
-                <p className={styles.fieldSuccess}>Checking availability...</p>
-              }
-
-              {usernameChecked && usernameAvailable &&
-                <p className={styles.fieldSuccess}>
-                  {username}.eviratecsocial.life is available!
-                </p>
-              }
-
-              {usernameChecked && !usernameAvailable &&
-                <p className={styles.fieldError}>
-                  Domain {username}{domain} is not available.
-                </p>
-              }
-
-              {usernameError &&
-                <p className={styles.fieldError}>{usernameError}</p>
-              }
-            </div>
-
-            <h2>Plan Selection</h2>
-
-            <div className={styles.inputField}>
-              <label htmlFor={sitePlanSelectId}>Select Plan</label>
-              <select
-                id={sitePlanSelectId}
-                value={sitePlan}
-                name="sitePlan"
-                onChange={e => setSitePlan(e.target.value)}
-                onBlur={e => touch(sitePlanSelectId)}
-                disabled={true === generalDisabled}
-              >
-                {plans.length && plans.map((plan: Plan) => {
-                  return (
-                    <option
-                      value={plan.externalId.stripe}
-                      key={`opt/${plan.externalId.stripe}`}
-                    >
-                      {plan.title} (${plan.ppm} /month)
-                    </option>
-                  )
-                })}
-              </select>
             </div>
 
             <h2>Payment</h2>

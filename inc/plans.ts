@@ -4,7 +4,7 @@ export const LITE_PLAN: Plan = {
   title: 'Lite',
   ppm: 15,
   features: [
-    '5 Categories',
+    '5 Feeds',
     '5 Users',
   ],
   externalId: {
@@ -16,7 +16,7 @@ export const STANDARD_PLAN: Plan = {
   title: 'Standard',
   ppm: 50,
   features: [
-    '10 Categories',
+    '10 Feeds',
     '25 Users',
   ],
   externalId: {
@@ -28,7 +28,7 @@ export const PREMIUM_PLAN: Plan = {
   title: 'Premium',
   ppm: 100,
   features: [
-    '50 Categories',
+    '50 Feeds',
     '125 Users',
   ],
   externalId: {
