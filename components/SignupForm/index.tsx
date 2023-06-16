@@ -104,6 +104,8 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const [joinResult, setJoinResult] = useState<JoinResult|null>(null)
   const [generalDisabled, setGeneralDisabled] = useState<boolean>(false)
 
+  const [askForDob, setAskForDob] = useState<boolean>(false)
+
   useEffect(() => {
     setSite(`${username}${domain}`)
   }, [username, domain])
@@ -334,7 +336,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       return
     }
 
-    if (!dob || !validDob(dob)) {
+    if (askForDob && (!dob || !validDob(dob))) {
       touch(dobInputId)
       return
     }
@@ -548,24 +550,26 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
               }
             </div>
 
-            <div className={styles.inputField}>
-              <label htmlFor={dobInputId}>Date of Birth</label>
-              <input
-                id={dobInputId}
-                value={dob}
-                name="dob"
-                type="date"
-                onChange={e => setDob(e.target.value)}
-                onBlur={e => touch(dobInputId)}
-                disabled={true === generalDisabled}
-              />
+            {askForDob &&
+              <div className={styles.inputField}>
+                <label htmlFor={dobInputId}>Date of Birth</label>
+                <input
+                  id={dobInputId}
+                  value={dob}
+                  name="dob"
+                  type="date"
+                  onChange={e => setDob(e.target.value)}
+                  onBlur={e => touch(dobInputId)}
+                  disabled={true === generalDisabled}
+                />
 
-              {touched(dobInputId) && !validDob(dob) &&
-                <p className={styles.fieldError}>
-                  You must be at least 18 years old to join.
-                </p>
-              }
-            </div>
+                {touched(dobInputId) && !validDob(dob) &&
+                  <p className={styles.fieldError}>
+                    You must be at least 18 years old to join.
+                  </p>
+                }
+              </div>
+            }
 
             <h2>Billing Details</h2>
 
