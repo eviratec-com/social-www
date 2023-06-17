@@ -150,7 +150,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <div className={styles.price}>
                     <span>Call Us</span>
                     <span>For a quote</span>
-                    <span>+61 481 465 983</span>
+                    <span>+61 482 465 983</span>
                   </div>
 
                   <ul>
