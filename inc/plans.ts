@@ -2,10 +2,10 @@ import type { Plan } from '@/types/Plan'
 
 export const LITE_PLAN: Plan = {
   title: 'Lite',
-  ppm: 15,
+  ppm: 13.80,
   features: [
-    '5 Feeds',
-    '5 Users',
+    '20GB Storage',
+    '60GB Bandwidth',
   ],
   externalId: {
     stripe: process.env.NEXT_PUBLIC_STRIPE_ESP_LITE_PLAN,
@@ -14,10 +14,10 @@ export const LITE_PLAN: Plan = {
 
 export const STANDARD_PLAN: Plan = {
   title: 'Standard',
-  ppm: 50,
+  ppm: 26.80,
   features: [
-    '10 Feeds',
-    '25 Users',
+    '40GB Storage',
+    '120GB Bandwidth',
   ],
   externalId: {
     stripe: process.env.NEXT_PUBLIC_STRIPE_ESP_STANDARD_PLAN,
@@ -26,10 +26,10 @@ export const STANDARD_PLAN: Plan = {
 
 export const PREMIUM_PLAN: Plan = {
   title: 'Premium',
-  ppm: 100,
+  ppm: 48.80,
   features: [
-    '50 Feeds',
-    '125 Users',
+    '80GB Storage',
+    '240GB Bandwidth',
   ],
   externalId: {
     stripe: process.env.NEXT_PUBLIC_STRIPE_ESP_PREMIUM_PLAN,

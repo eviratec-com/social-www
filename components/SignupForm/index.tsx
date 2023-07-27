@@ -592,7 +592,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                       value={plan.externalId.stripe}
                       key={`opt/${plan.externalId.stripe}`}
                     >
-                      {plan.title} Plan: {plan.features.join(', ')}: ${plan.ppm} /month
+                      {plan.title}: {plan.features.join(', ')}: ${plan.ppm}0 /month
                     </option>
                   )
                 })}

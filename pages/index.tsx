@@ -208,7 +208,6 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
 
                 <ul>
                   <li>BYO/Custom domain name</li>
-                  <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
                   <li>BYO branding<br /><span>(text, logo, &amp; colours)</span></li>
                   <li>Reserved usernames</li>
                   <li>User photo uploads<br /><span>(up to 50MB per file)</span></li>
@@ -222,8 +221,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                 <h3>All Plans Include</h3>
 
                 <ul>
-                  <li>100GB Storage</li>
-                  <li>1TB Transfer (outbound) per month</li>
+                  <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
                   <li>Fully-managed hosting</li>
                   <li>Fault-tolerant infrastructure</li>
                   <li>Set-up in 2 business days<br /><span>(or 20% discount for 12-months)</span></li>
@@ -244,14 +242,14 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <h3>Lite</h3>
 
                   <div className={styles.price}>
-                    <span>&#x24;15</span>
+                    <span>&#x24;13.80</span>
                     <span>Per month</span>
                     <span>Including GST</span>
                   </div>
 
                   <ul>
-                    <li>5 Categories</li>
-                    <li>5 User Accounts</li>
+                    <li>20GB Storage</li>
+                    <li>60GB Bandwidth</li>
                     <li>Email Support</li>
                   </ul>
 
@@ -264,14 +262,14 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <h3>Standard</h3>
 
                   <div className={styles.price}>
-                    <span>&#x24;50</span>
+                    <span>&#x24;26.80</span>
                     <span>Per month</span>
                     <span>Including GST</span>
                   </div>
 
                   <ul>
-                    <li>10 Categories</li>
-                    <li>25 User Accounts</li>
+                    <li>40GB Storage</li>
+                    <li>120GB Bandwidth</li>
                     <li>Phone & Email Support</li>
                   </ul>
 
@@ -284,14 +282,14 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   <h3>Premium</h3>
 
                   <div className={styles.price}>
-                    <span>&#x24;100</span>
+                    <span>&#x24;48.80</span>
                     <span>Per month</span>
                     <span>Including GST</span>
                   </div>
 
                   <ul>
-                    <li>50 Categories</li>
-                    <li>125 User Accounts</li>
+                    <li>80GB Storage</li>
+                    <li>240GB Bandwidth</li>
                     <li>Phone & Email Support</li>
                   </ul>
 
@@ -310,13 +308,14 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                   </div>
 
                   <ul>
+                    <li>350GB Storage</li>
+                    <li>1TB Bandwidth</li>
+                    <li>Enterprise Support</li>
                     <li>Staging Site</li>
-                    <li>Unlimited Categories</li>
-                    <li>Unlimited User Accounts</li>
                   </ul>
 
-                  <Button href="/join" className={styles.ctaBtn} >
-                    Create a new site
+                  <Button href="/contact-us" className={styles.ctaBtn}>
+                    Contact us for a quote
                   </Button>
                 </div>
 
