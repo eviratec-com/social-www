@@ -65,7 +65,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
 
       <main className={styles.main}>
         <h1>
-          ESP Features
+          Free Website Features
         </h1>
 
 

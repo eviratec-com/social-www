@@ -204,6 +204,7 @@ const HomePage: NextPage<Props> = ({ feeds }: InferGetServerSidePropsType<typeof
                 <h2>All Plans Include</h2>
 
                 <ul>
+                  <li>Free website</li>
                   <li>Free sub-domain<br /><span>you.eviratecsocial(.online|.life)</span></li>
                   <li>Fully-managed hosting</li>
                   <li>Free Technical Support</li>
