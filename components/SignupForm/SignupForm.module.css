@@ -10,6 +10,59 @@
   border-radius: 2px;
 }
 
+._ .formWrapper table.orderSummary {
+
+}
+
+._ .formWrapper table.orderSummary tr {
+
+}
+
+._ .formWrapper table.orderSummary thead tr td {
+  font-weight: 500;
+  border-bottom: 1px solid var(--input-label-color);
+  color: var(--input-label-color);
+  font-weight: 200;
+  font-size: 0.9rem;
+}
+
+._ .formWrapper table.orderSummary thead tr td:nth-of-type(2) {
+  text-align: right;
+}
+
+._ .formWrapper table.orderSummary tbody tr td {
+  font-weight: 300;
+  vertical-align: top;
+  padding-top: 0.5rem;
+}
+
+._ .formWrapper table.orderSummary tbody tr td:nth-of-type(2) {
+  text-align: right;
+}
+
+._ .formWrapper table.orderSummary tbody tr td span.subText {
+  display: block;
+  font-size: 0.8rem;
+  color: rgba(var(--foreground-rgb), 0.5);
+}
+
+._ .formWrapper form p.orderSummaryText,
+._ .formWrapper form p.orderSummaryTextSmall {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+._ .formWrapper form p.orderSummaryTextSmall {
+  font-size: 0.8rem;
+  color: rgba(var(--foreground-rgb), 0.8);
+}
+
+._ .formWrapper form p.orderSummaryText a,
+._ .formWrapper form p.orderSummaryTextSmall a {
+  color: rgba(var(--link-rgb), 1);
+}
+
 ._ .formWrapper form {
   display: flex;
   flex-direction: row;

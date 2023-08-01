@@ -88,6 +88,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
   const [domain, setDomain] = useState<string>('.eviratecsocial.life')
   const [siteName, setSiteName] = useState<string>('')
   const [sitePlan, setSitePlan] = useState<string>(PLAN.LITE_PLAN.externalId.stripe)
+  const [displayPlan, setDisplayPlan] = useState<Plan>(PLAN.LITE_PLAN)
 
   const [touchedFields, setTouchedFields] = useState<string[]>([])
 
@@ -465,10 +466,14 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       return
     }
 
-    onChangePlan && onChangePlan(sitePlan)
-    onChangeAmount && onChangeAmount(plans.filter(plan => {
+    const _plan = plans.filter(plan => {
       return plan.externalId.stripe === sitePlan
-    })[0].ppm*100)
+    })[0]
+
+    setDisplayPlan(_plan)
+
+    onChangePlan && onChangePlan(sitePlan)
+    onChangeAmount && onChangeAmount(_plan.ppm*100)
   }, [sitePlan, plans])
 
   useEffect(() => {
@@ -485,95 +490,6 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
       <div className={styles.formWrapper}>
         <form name="login" onSubmit={handleSubmit}>
           <section className={styles.accountInfo}>
-            <h2>Site Details</h2>
-
-            <div className={styles.inputField}>
-              <label htmlFor={siteNameInputId}>Site Name</label>
-              <input
-                id={siteNameInputId}
-                value={siteName}
-                name="siteName"
-                placeholder="e.g. John's Book Club"
-                onChange={e => setSiteName(e.target.value)}
-                onBlur={e => touch(siteNameInputId)}
-                disabled={true === generalDisabled}
-              />
-
-              {touched(siteNameInputId) && siteName.length < 1 &&
-                <p className={styles.fieldError}>
-                  Please choose a site name.
-                </p>
-              }
-            </div>
-
-            <div className={styles.inputField}>
-              <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
-              <div className={styles.urlPicker}>
-                <span className={styles.urlPickerProtocol}>https://</span>
-                <div className={styles.urlPickerInput}>
-                  <input
-                    id={usernameInputId}
-                    value={username}
-                    name="username"
-                    placeholder="yourname"
-                    className={styles.usernameInput}
-                    onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
-                    onFocus={e => setUsernameChecked(false)}
-                    onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
-                    disabled={true === generalDisabled}
-                  />
-                </div>
-
-                <div className={styles.urlPickerDomain}>
-                  <select
-                    value={domain}
-                    onChange={e => setDomain(e.target.value)}
-                    disabled={true === generalDisabled}
-                  >
-                    <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
-                  </select>
-                </div>
-              </div>
-
-              {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
-                <p className={styles.fieldError}>
-                  Please enter a valid sub-domain.
-                  <br />Sub-domain names must be at least 3 characters.
-                </p>
-              }
-
-              {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
-                <p className={styles.fieldError}>
-                  Please enter a valid sub-domain. Sub-domain names may only contain:
-                  <ul>
-                    <li>English alphabet (A-Z)</li>
-                    <li>Numbers (0-9)</li>
-                    <li>Hyphens (-)</li>
-                  </ul>
-                </p>
-              }
-
-              {loadingUsername &&
-                <p className={styles.fieldSuccess}>Checking availability...</p>
-              }
-
-              {usernameChecked && usernameAvailable &&
-                <p className={styles.fieldSuccess}>
-                  {username}.eviratecsocial.life is available!
-                </p>
-              }
-
-              {usernameChecked && !usernameAvailable &&
-                <p className={styles.fieldError}>
-                  Domain {username}{domain} is not available.
-                </p>
-              }
-
-              {usernameError &&
-                <p className={styles.fieldError}>{usernameError}</p>
-              }
-            </div>
-
             <h2>Plan Selection</h2>
 
             <div className={styles.inputField}>
@@ -684,9 +600,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                 }
               </div>
             }
-          </section>
 
-          <section className={styles.siteInfo}>
             <h2>Billing Details</h2>
 
             <div className={styles.inputField}>
@@ -813,6 +727,143 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
                   }
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section className={styles.siteInfo}>
+            <h2>Site Details</h2>
+
+            <div className={styles.inputField}>
+              <label htmlFor={siteNameInputId}>Site Name</label>
+              <input
+                id={siteNameInputId}
+                value={siteName}
+                name="siteName"
+                placeholder="e.g. John's Book Club"
+                onChange={e => setSiteName(e.target.value)}
+                onBlur={e => touch(siteNameInputId)}
+                disabled={true === generalDisabled}
+              />
+
+              {touched(siteNameInputId) && siteName.length < 1 &&
+                <p className={styles.fieldError}>
+                  Please choose a site name.
+                </p>
+              }
+            </div>
+
+            <div className={styles.inputField}>
+              <label htmlFor={usernameInputId}>Choose Sub-Domain</label>
+              <div className={styles.urlPicker}>
+                <span className={styles.urlPickerProtocol}>https://</span>
+                <div className={styles.urlPickerInput}>
+                  <input
+                    id={usernameInputId}
+                    value={username}
+                    name="username"
+                    placeholder="yourname"
+                    className={styles.usernameInput}
+                    onChange={e => validInputChar(e.target.value) && setUsername(e.target.value)}
+                    onFocus={e => setUsernameChecked(false)}
+                    onBlur={e => touch(usernameInputId) && e.target.value && checkUsername(e)}
+                    disabled={true === generalDisabled}
+                  />
+                </div>
+
+                <div className={styles.urlPickerDomain}>
+                  <select
+                    value={domain}
+                    onChange={e => setDomain(e.target.value)}
+                    disabled={true === generalDisabled}
+                  >
+                    <option value=".eviratecsocial.life" selected>.eviratecsocial.life</option>
+                  </select>
+                </div>
+              </div>
+
+              {touched(usernameInputId) && !validUsername(username) && username.length <= 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain.
+                  <br />Sub-domain names must be at least 3 characters.
+                </p>
+              }
+
+              {touched(usernameInputId) && !validUsername(username) && username.length > 2 &&
+                <p className={styles.fieldError}>
+                  Please enter a valid sub-domain. Sub-domain names may only contain:
+                  <ul>
+                    <li>English alphabet (A-Z)</li>
+                    <li>Numbers (0-9)</li>
+                    <li>Hyphens (-)</li>
+                  </ul>
+                </p>
+              }
+
+              {loadingUsername &&
+                <p className={styles.fieldSuccess}>Checking availability...</p>
+              }
+
+              {usernameChecked && usernameAvailable &&
+                <p className={styles.fieldSuccess}>
+                  {username}.eviratecsocial.life is available!
+                </p>
+              }
+
+              {usernameChecked && !usernameAvailable &&
+                <p className={styles.fieldError}>
+                  Domain {username}{domain} is not available.
+                </p>
+              }
+
+              {usernameError &&
+                <p className={styles.fieldError}>{usernameError}</p>
+              }
+            </div>
+
+            <h2>Order Summary</h2>
+
+            <div className={styles.inputField}>
+              <table className={styles.orderSummary} cellspacing="0">
+                <thead>
+                  <tr>
+                    <td>Item Description</td>
+                    <td>Price</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      1x {displayPlan.title} Plan
+                      <span className={styles.subText}>
+                        Free Website,&nbsp;
+                        {displayPlan.features.join(', ')}
+                      </span>
+                    </td>
+                    <td>
+                      ${String(displayPlan.ppm).padEnd(5, '0')}
+                      <span className={styles.subText}>
+                        per month
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p className={styles.orderSummaryText}>
+                Your card will be charged ${String(displayPlan.ppm).padEnd(5, '0')} each month, until you cancel.
+              </p>
+
+              <p className={styles.orderSummaryTextSmall}>
+                Cancel at any time by contacting us:<br />
+                <Link href="tel:+61482465983">
+                  +61 482 465 983
+                </Link>
+                &nbsp;/&nbsp;
+                <Link href="mailto:info@eviratecsocial.com">
+                  info@eviratecsocial.com
+                </Link>
+              </p>
             </div>
 
             <h2>Payment</h2>
