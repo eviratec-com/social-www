@@ -823,7 +823,7 @@ export default function SignupForm({ onChangePlan, onChangeAmount }: Props) {
             <h2>Order Summary</h2>
 
             <div className={styles.inputField}>
-              <table className={styles.orderSummary} cellspacing="0">
+              <table className={styles.orderSummary} cellSpacing="0">
                 <thead>
                   <tr>
                     <td>Item Description</td>
